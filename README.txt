@@ -1,5 +1,5 @@
-Bu hafta, kullanıcı girişi eklendi.
+Bu hafta, üye olma sayfası eklendi.
 
-Girilen kullanıcı adının, veritabanında olup olmadığı kontrol ediliyor ve ona göre giriş izni veriliyor.
+Bilgiler boş bırakıldığında ve veritabanına eklenen veriler ile aynı bilgilere sahip olduğunda
 
-Kullanıcı girişi Anasayfada olduğu için Anasayfadan, Üye Ol sayfasına geçebilmek adına buton eklendi.
+çıkan bilgilendirme mesajları eklendi. Anasayfaya geri dönmek için Geri butonu eklendi.
