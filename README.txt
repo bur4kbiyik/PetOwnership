@@ -1,5 +1,7 @@
-Bu hafta, üye olma sayfası eklendi.
+Bu hafta, ilan verme sayfasına başladım.
 
-Bilgiler boş bırakıldığında ve veritabanına eklenen veriler ile aynı bilgilere sahip olduğunda
+İlan bilgilerine ek olarak, resim ekleme butonu da eklendi.
 
-çıkan bilgilendirme mesajları eklendi. Anasayfaya geri dönmek için Geri butonu eklendi.
+Bu sayfada henüz veritabanı ile ilgili bir işlem yapılmadı şu anlık textBoxlar,
+comboBoxlar ve resim eklenmediğinde veya boş bırakıldığında hata penceresi çıkmasını 
+sağlayan ifler eklendi.

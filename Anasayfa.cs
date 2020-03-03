@@ -54,8 +54,6 @@ namespace Petilan
         SqlDataReader dataReader;
         private void btGiris_Click(object sender, EventArgs e)
         {
-            string user = tbKAdiAnasayfa.Text;
-            string pass = tbSifreAnasayfa.Text;
             baglanti = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
             command = new SqlCommand();
             baglanti.Open();
@@ -70,6 +68,7 @@ namespace Petilan
                 label2.Hide();
                 btUyeOl.Hide();
                 btGiris.Hide();
+                adminGiris.Hide();
                 btHesap.Visible = true;
                 btHesap.Text = tbKAdiAnasayfa.Text;
                 MessageBox.Show("Giriş Başarılı!");
@@ -81,15 +80,48 @@ namespace Petilan
             baglanti.Close();
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void btHesap_Click(object sender, EventArgs e)
         {
             cmHesap.Show(Cursor.Position.X, Cursor.Position.Y);
         }
 
+        private void cmHesap_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            tbKAdiAnasayfa.Visible = true;
+            tbSifreAnasayfa.Visible = true;
+            label1.Visible = true;
+            label2.Visible = true;
+            btUyeOl.Visible = true;
+            btGiris.Visible = true;
+            btHesap.Hide();
+        }
+
+        private void hesapAyarlari_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void adminGiris_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AdminGiris adminGiris = new AdminGiris();
+            adminGiris.ShowDialog();
+        }
+
+        private void ilanVer_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            IlanVer ilanVerSayfa = new IlanVer();
+            ilanVerSayfa.ShowDialog();
+        }
     }
 }
