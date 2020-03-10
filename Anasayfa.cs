@@ -52,13 +52,15 @@ namespace Petilan
         SqlConnection baglanti;
         SqlCommand command;
         SqlDataReader dataReader;
+        public static string SetValueForText1 = "";
         private void btGiris_Click(object sender, EventArgs e)
         {
+            SetValueForText1 = tbKAdiAnasayfa.Text;
             baglanti = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
             command = new SqlCommand();
             baglanti.Open();
             command.Connection = baglanti;
-            command.CommandText = "SELECT * FROM tbl_Kullanici where KullaniciAdi='" + tbKAdiAnasayfa.Text + "' AND Sifre='" + tbSifreAnasayfa.Text + "'";
+            command.CommandText = "SELECT * FROM tbl_Kullanici where KullaniciAdi='" + SetValueForText1 + "' AND Sifre='" + tbSifreAnasayfa.Text + "'";
             dataReader = command.ExecuteReader();
             if (dataReader.Read())
             {
@@ -121,7 +123,16 @@ namespace Petilan
         {
             this.Hide();
             IlanVer ilanVerSayfa = new IlanVer();
+            ilanVerSayfa.btHesapIlanVer.Text = btHesap.Text;
             ilanVerSayfa.ShowDialog();
+        }
+
+        private void ilanlarımToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Ilanlarim ilanlarim = new Ilanlarim();
+            ilanlarim.btIlanlarimHesap.Text = tbKAdiAnasayfa.Text;
+            ilanlarim.ShowDialog();
         }
     }
 }

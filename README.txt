@@ -1,7 +1,6 @@
-Bu hafta, ilan verme sayfasına başladım.
+Bu hafta, ilan verme sayfasını bitirdim.
 
-İlan bilgilerine ek olarak, resim ekleme butonu da eklendi.
+İlan ver butonuna basıldığında, ilanlar tablosuna kayıt ekleniyor. Kullanıcı tablosu ile İlanlar tablosu arasında kurduğum bağlantı ile birlikte, yayınlanan ilanın KullanıcıNo kolonunda, ilanı yayınlayan kullanıcının id numarası gözüküyor.
 
-Bu sayfada henüz veritabanı ile ilgili bir işlem yapılmadı şu anlık textBoxlar,
-comboBoxlar ve resim eklenmediğinde veya boş bırakıldığında hata penceresi çıkmasını 
-sağlayan ifler eklendi.
+İlan verme sayfasındaki açılır menüden, İlanlarım kısmına girildiğinde yayınlanan ilan hakkındaki bilgiler ve ilana eklenen resim gözüküyor.
+

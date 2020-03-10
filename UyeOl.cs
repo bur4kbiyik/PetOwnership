@@ -71,6 +71,11 @@ namespace Petilan.Sayfalar
                 MessageBox.Show("E-Mail, kısmını boş bıraktınız tekrar kontrol ediniz.");
 
             }
+            else if (tbTelNo.Text == "")
+            {
+                MessageBox.Show("Telefon numarası, kısmını boş bıraktınız tekrar kontrol ediniz.");
+
+            }
             else if (cbCinsiyet.SelectedIndex != 0 && cbCinsiyet.SelectedIndex != 1)
             {
                 MessageBox.Show("Cinsiyet, kısmını boş bıraktınız tekrar kontrol ediniz.");
@@ -150,25 +155,26 @@ namespace Petilan.Sayfalar
         public int VarMi(string aranan)
         {
             int kAdiSonuc, mailSonuc, telNoSonuc;
+
             SqlConnection baglanti = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+
             string kullaniciadi = "Select COUNT(KullaniciAdi) from tbl_Kullanici WHERE KullaniciAdi='" + aranan + "'";
             string mail = "Select COUNT(Mail) from tbl_Kullanici WHERE Mail='" + aranan + "'";
             string telno = "Select COUNT(TelefonNo) from tbl_Kullanici WHERE TelefonNo='" + aranan + "'";
+
+            baglanti.Open();
 
             SqlCommand kAdiCommand = new SqlCommand(kullaniciadi, baglanti);
             SqlCommand mailCommand = new SqlCommand(mail, baglanti);
             SqlCommand telNoCommand = new SqlCommand(telno, baglanti);
 
-            baglanti.Open();
-
             kAdiSonuc = Convert.ToInt32(kAdiCommand.ExecuteScalar());
             mailSonuc = Convert.ToInt32(mailCommand.ExecuteScalar());
             telNoSonuc = Convert.ToInt32(telNoCommand.ExecuteScalar());
 
-            baglanti.Close();
-
             return kAdiSonuc + mailSonuc + telNoSonuc;
 
+            baglanti.Close();
         }
         private void tbTelNo_KeyPress(object sender, KeyPressEventArgs e)
         {
