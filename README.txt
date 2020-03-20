@@ -1,6 +1,9 @@
-Bu hafta, ilan verme sayfasını bitirdim.
+Bu hafta etkileşimin bir kısmı yapıldı.
+Uygulamanın üyesi olan kullanıcılardan birisi, başka bir üyenin ilanına talepte bulunabiliyor ve
+ilanın sahibi olan kişiye ilanınıza talep var diye bildirim gidiyor.
 
-İlan ver butonuna basıldığında, ilanlar tablosuna kayıt ekleniyor. Kullanıcı tablosu ile İlanlar tablosu arasında kurduğum bağlantı ile birlikte, yayınlanan ilanın KullanıcıNo kolonunda, ilanı yayınlayan kullanıcının id numarası gözüküyor.
+Düzenlemeler;
 
-İlan verme sayfasındaki açılır menüden, İlanlarım kısmına girildiğinde yayınlanan ilan hakkındaki bilgiler ve ilana eklenen resim gözüküyor.
-
+- Sayfadan sayfaya aktarılan veriler şu an önce veritabanına eklenip daha sonra veritabanından çekiliyor.
+- Veritabanına resim kaydetme ve çekme problemi halloldu.
+- static değişkenler tanımlanıp gereksiz kodlardan arınıldı.

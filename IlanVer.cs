@@ -15,11 +15,87 @@ namespace Petilan.Sayfalar
 {
     public partial class IlanVer : Form
     {
+        public static string KullaniciAdi { get; set; }
+        public void ilanKontrol()
+        {
+
+            string resimKontrol = pbImageUpload.ImageLocation;
+
+            if (cbHayvanYasi.SelectedIndex != 0 && cbHayvanYasi.SelectedIndex != 1 &&
+                    cbHayvanYasi.SelectedIndex != 2 && cbHayvanYasi.SelectedIndex != 3 &&
+                    cbHayvanYasi.SelectedIndex != 4)
+            {
+                MessageBox.Show("Hayvan Yaşı seçmediniz tekrar kontrol ediniz.");
+            }
+            else
+            {
+                if (cbHayvanCinsiyeti.SelectedIndex != 0 && cbHayvanCinsiyeti.SelectedIndex != 1)
+                {
+                    MessageBox.Show("Hayvan Cinsiyeti seçmediniz tekrar kontrol ediniz.");
+                }
+                else
+                {
+                    if (cbIlanDurumu.SelectedIndex != 0)
+                    {
+                        MessageBox.Show("Lütfen ilan durumunu aktif olarak (A) işaretleyiniz.");
+                    }
+                    else
+                    {
+                        if (File.Exists(resimKontrol) == false)
+                        {
+                            MessageBox.Show("Resim eklemeyi unuttunuz tekrar kontrol ediniz.");
+                        }
+                        else
+                        {
+                            try
+                            {
+                                SqlConnection baglanti = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+
+                                if (baglanti.State == ConnectionState.Closed)
+                                    baglanti.Open();
+
+
+                                string kullaniciNo = "select * from tbl_Kullanici where KullaniciAdi = '" + KullaniciAdi + "'";
+                                SqlCommand command2 = new SqlCommand(kullaniciNo, baglanti);
+                                SqlDataReader reader = command2.ExecuteReader();
+                                var id = 0;
+                                while (reader.Read())
+                                {
+                                    id = Convert.ToInt32(reader[0]);
+                                }
+                                reader.Close();
+
+                                try
+                                {
+                                    string veriEkle = "insert into tbl_Ilanlar(IlanBaslik,HayvanAdi,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,IlanDurumu,KullaniciNo,ResimKonumu) values ('" + tbIlanBaslik.Text + "','" + tbHayvanIsmi.Text + "','" + cbHayvanTuru.Text + "','" + cbHayvanIrki.Text + "','" + cbHayvanYasi.Text + "','" + cbHayvanCinsiyeti.Text + "','" + cbIlanDurumu.Text + "','" + id + "','" + imageUplGlb + "')";
+                                    SqlCommand command = new SqlCommand(veriEkle, baglanti);
+                                    command.ExecuteNonQuery();
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
+
+                                MessageBox.Show("İlan yayınlama işlemi başarılı.");
+
+                                baglanti.Close();
+                            }
+
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("İşlem sırasında hata oluştu. " + ex);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
         public IlanVer()
         {
             InitializeComponent();
         }
-
+        string imageUplGlb;
         private void btResimEkle_Click(object sender, EventArgs e)
         {
             String imageLocation = "";
@@ -33,6 +109,7 @@ namespace Petilan.Sayfalar
                 {
                     imageLocation = imageUpload.FileName;
                     pbImageUpload.ImageLocation = imageLocation;
+                    imageUplGlb = imageLocation;
                 }
             }
             catch (Exception)
@@ -41,54 +118,10 @@ namespace Petilan.Sayfalar
             }
         }
 
+
         private void btIlanVer_Click(object sender, EventArgs e)
         {
 
-
-            if (cbHayvanTuru.SelectedIndex == 0)
-            {
-                if (!(cbHayvanIrki.SelectedIndex >= 14 && cbHayvanIrki.SelectedIndex <= 24))
-                {
-                    MessageBox.Show("Lütfen bir kedi ırkı seçiniz.");
-                }
-            }
-            else if (cbHayvanTuru.SelectedIndex == 1)
-            {
-                if (!(cbHayvanIrki.SelectedIndex >= 1 && cbHayvanIrki.SelectedIndex <= 12))
-                {
-                    MessageBox.Show("Lütfen bir köpek ırkı seçiniz.");
-                }
-            }
-            else if (cbHayvanTuru.SelectedIndex == 2)
-            {
-                if (!(cbHayvanIrki.SelectedIndex >= 26 && cbHayvanIrki.SelectedIndex <= 30))
-                {
-                    MessageBox.Show("Lütfen bir kuş ırkı seçiniz.");
-                }
-            }
-            else if (cbHayvanTuru.SelectedIndex == 3)
-            {
-                if (!(cbHayvanIrki.SelectedIndex >= 32 && cbHayvanIrki.SelectedIndex <= 35))
-                {
-                    MessageBox.Show("Lütfen bir sürüngen ırkı seçiniz.");
-                }
-            }
-            else if (cbHayvanTuru.SelectedIndex == 4)
-            {
-                if (!(cbHayvanIrki.SelectedIndex >= 37 && cbHayvanIrki.SelectedIndex <= 40))
-                {
-                    MessageBox.Show("Lütfen bir kemirgen ırkı seçiniz.");
-                }
-            }
-            else if (cbHayvanTuru.SelectedIndex == 5)
-            {
-                if (!(cbHayvanIrki.SelectedIndex >= 42 && cbHayvanIrki.SelectedIndex <= 50))
-                {
-                    MessageBox.Show("Lütfen bir su canlısı ırkı seçiniz.");
-                }
-            }
-
-            string resimKontrol = pbImageUpload.ImageLocation;
 
             if (tbIlanBaslik.Text == "")
             {
@@ -98,12 +131,13 @@ namespace Petilan.Sayfalar
             {
                 MessageBox.Show("Evcil hayvanınızın ismini boş bıraktınız tekrar kontrol ediniz.");
             }
-            else if (cbHayvanTuru.SelectedIndex != 0 && cbHayvanTuru.SelectedIndex != 1 && 
-                    cbHayvanTuru.SelectedIndex != 2 && cbHayvanTuru.SelectedIndex != 3 && 
+            else if (cbHayvanTuru.SelectedIndex != 0 && cbHayvanTuru.SelectedIndex != 1 &&
+                    cbHayvanTuru.SelectedIndex != 2 && cbHayvanTuru.SelectedIndex != 3 &&
                     cbHayvanTuru.SelectedIndex != 4 && cbHayvanTuru.SelectedIndex != 5)
             {
-                 MessageBox.Show("Hayvan Türü seçmediniz tekrar kontrol ediniz.");
+                MessageBox.Show("Hayvan Türü seçmediniz tekrar kontrol ediniz.");
             }
+
             else if (cbHayvanIrki.SelectedIndex == 0 || cbHayvanIrki.SelectedIndex == 13
                     || cbHayvanIrki.SelectedIndex == 25 || cbHayvanIrki.SelectedIndex == 31
                     || cbHayvanIrki.SelectedIndex == 36 || cbHayvanIrki.SelectedIndex == 41)
@@ -114,72 +148,70 @@ namespace Petilan.Sayfalar
             {
                 MessageBox.Show("Hayvan Irkı seçmediniz lütfen tekrar kontrol ediniz.");
             }
-            else if (cbHayvanYasi.SelectedIndex != 0 && cbHayvanYasi.SelectedIndex != 1 &&
-                    cbHayvanYasi.SelectedIndex != 2 && cbHayvanYasi.SelectedIndex != 3 &&
-                    cbHayvanYasi.SelectedIndex != 4)
+            else if (cbHayvanTuru.SelectedIndex == 0)
             {
-                MessageBox.Show("Hayvan Yaşı seçmediniz tekrar kontrol ediniz.");
-            }
-            else if (cbHayvanCinsiyeti.SelectedIndex != 0 && cbHayvanCinsiyeti.SelectedIndex != 1)
-            {
-                MessageBox.Show("Hayvan Cinsiyeti seçmediniz tekrar kontrol ediniz.");
-            }
-            else if (cbIlanDurumu.SelectedIndex != 0)
-            {
-                MessageBox.Show("Lütfen ilan durumunu aktif olarak (A) işaretleyiniz.");
-            }
-            else if (File.Exists(resimKontrol) == false)
-            {
-                MessageBox.Show("Resim eklemeyi unuttunuz tekrar kontrol ediniz.");
-            }
-            else
-            {
-                try
+                if (!(cbHayvanIrki.SelectedIndex >= 14 && cbHayvanIrki.SelectedIndex <= 24))
                 {
-                    SqlConnection baglanti = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
-
-                    if (baglanti.State == ConnectionState.Closed)
-                        baglanti.Open();
-
-                   
-                    string kullaniciNo = "select * from tbl_Kullanici where KullaniciAdi = '" + Anasayfa.SetValueForText1 + "'";
-                    SqlCommand command2 = new SqlCommand(kullaniciNo, baglanti);
-                    SqlDataReader reader = command2.ExecuteReader();
-                    var id = 0;
-                    while (reader.Read())
-                    {
-                         id =Convert.ToInt32(reader[0]);
-                    }
-                    reader.Close();
-                    
-                    try
-                    {
-                        string veriEkle = "insert into tbl_Ilanlar(IlanBaslik,HayvanAdi,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,IlanDurumu,KullaniciNo) values ('" + tbIlanBaslik.Text + "','" + tbHayvanIsmi.Text + "','" + cbHayvanTuru.Text + "','" + cbHayvanIrki.Text + "','" + cbHayvanYasi.Text + "','" + cbHayvanCinsiyeti.Text + "','" + cbIlanDurumu.Text + "','" + id + "')";
-                        SqlCommand command = new SqlCommand(veriEkle, baglanti);
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-                    
-                    MessageBox.Show("İlan yayınlama işlemi başarılı.");
-
-                    Anasayfa anasayfa = new Anasayfa();
-                    anasayfa.btHesap.Visible = true;
-                    anasayfa.pbYayinlananIlan1.Image = pbImageUpload.Image;
-                    anasayfa.lbIlanBaslik1.Text = tbIlanBaslik.Text;
-                    anasayfa.lbIlanHayvanYasi1.Text = cbHayvanYasi.Text;
-                    anasayfa.lbIlanHayvanTuru1.Text = cbHayvanTuru.Text;
-                    anasayfa.lbIlanHayvanIrki1.Text = cbHayvanIrki.Text;
-                    anasayfa.lbIlanHayvanCinsiyeti1.Text = cbHayvanCinsiyeti.Text;
-
-                    baglanti.Close();
+                    MessageBox.Show("Lütfen bir kedi ırkı seçiniz.");
                 }
-                
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("İşlem sırasında hata oluştu. " + ex);
+                    ilanKontrol();
+                }
+            }
+            else if (cbHayvanTuru.SelectedIndex == 1)
+            {
+                if (!(cbHayvanIrki.SelectedIndex >= 1 && cbHayvanIrki.SelectedIndex <= 12))
+                {
+                    MessageBox.Show("Lütfen bir köpek ırkı seçiniz.");
+                }
+                else
+                {
+                    ilanKontrol();
+                }
+            }
+            else if (cbHayvanTuru.SelectedIndex == 2)
+            {
+                if (!(cbHayvanIrki.SelectedIndex >= 26 && cbHayvanIrki.SelectedIndex <= 30))
+                {
+                    MessageBox.Show("Lütfen bir kuş ırkı seçiniz.");
+                }
+                else
+                {
+                    ilanKontrol();
+                }
+            }
+            else if (cbHayvanTuru.SelectedIndex == 3)
+            {
+                if (!(cbHayvanIrki.SelectedIndex >= 32 && cbHayvanIrki.SelectedIndex <= 35))
+                {
+                    MessageBox.Show("Lütfen bir sürüngen ırkı seçiniz.");
+                }
+                else
+                {
+                    ilanKontrol();
+                }
+            }
+            else if (cbHayvanTuru.SelectedIndex == 4)
+            {
+                if (!(cbHayvanIrki.SelectedIndex >= 37 && cbHayvanIrki.SelectedIndex <= 40))
+                {
+                    MessageBox.Show("Lütfen bir kemirgen ırkı seçiniz.");
+                }
+                else
+                {
+                    ilanKontrol();
+                }
+            }
+            else if (cbHayvanTuru.SelectedIndex == 5)
+            {
+                if (!(cbHayvanIrki.SelectedIndex >= 42 && cbHayvanIrki.SelectedIndex <= 50))
+                {
+                    MessageBox.Show("Lütfen bir su canlısı ırkı seçiniz.");
+                }
+                else
+                {
+                    ilanKontrol();
                 }
             }
         }
@@ -223,13 +255,20 @@ namespace Petilan.Sayfalar
             this.Hide();
             Ilanlarim ilanlarim = new Ilanlarim();
             ilanlarim.btIlanlarimHesap.Text = btHesapIlanVer.Text;
-            ilanlarim.pbYayinlananIlanIlanlarim.Image = pbImageUpload.Image;
-            ilanlarim.lbIlanBaslikIlanlarim.Text = tbIlanBaslik.Text;
-            ilanlarim.lbIlanHayvanYasiIlanlarim.Text = cbHayvanYasi.Text;
-            ilanlarim.lbIlanHayvanTuruIlanlarim.Text = cbHayvanTuru.Text;
-            ilanlarim.lbIlanHayvanIrkiIlanlarim.Text = cbHayvanIrki.Text;
-            ilanlarim.lbIlanHayvanCinsiyetiIlanlarim.Text = cbHayvanCinsiyeti.Text;
             ilanlarim.ShowDialog();
+        }
+
+        private void IlanVer_Load(object sender, EventArgs e)
+        {
+            KullaniciAdi = Anasayfa.KullaniciAdi;
+            btHesapIlanVer.Text = KullaniciAdi;
+        }
+
+        private void gelenIstekler_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            GelenIstekler gi = new GelenIstekler();
+            gi.ShowDialog();
         }
     }
 }
