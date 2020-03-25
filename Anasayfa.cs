@@ -101,7 +101,6 @@ namespace Petilan
             rastgeleCinsiyetleri[3] = lbRastgeleCinsiyet4;
             rastgeleCinsiyetleri[4] = lbRastgeleCinsiyet5;
             rastgeleCinsiyetleri[5] = lbRastgeleCinsiyet6;
-
         }
         SqlConnection baglanti;
         SqlCommand command;
@@ -313,6 +312,7 @@ namespace Petilan
                     shpln.lbSahiplenYas.Text = ilanYas1;
                     shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet1;
                 }
+                con.Close();
             }
             this.Hide();
             Sahiplen sahiplen = new Sahiplen();
@@ -355,6 +355,7 @@ namespace Petilan
                     shpln.lbSahiplenYas.Text = ilanYas2;
                     shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet2;
                 }
+                con.Close();
             }
             this.Hide();
             Sahiplen sahiplen = new Sahiplen();
@@ -397,6 +398,7 @@ namespace Petilan
                     shpln.lbSahiplenYas.Text = ilanYas3;
                     shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet3;
                 }
+                con.Close();
             }
             this.Hide();
             Sahiplen sahiplen = new Sahiplen();
@@ -439,6 +441,7 @@ namespace Petilan
                     shpln.lbSahiplenYas.Text = ilanYas4;
                     shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet4;
                 }
+                con.Close();
             }
             this.Hide();
             Sahiplen sahiplen = new Sahiplen();
@@ -481,6 +484,7 @@ namespace Petilan
                     shpln.lbSahiplenYas.Text = ilanYas5;
                     shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet5;
                 }
+                con.Close();
             }
             this.Hide();
             Sahiplen sahiplen = new Sahiplen();
@@ -523,6 +527,7 @@ namespace Petilan
                     shpln.lbSahiplenYas.Text = ilanYas6;
                     shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet6;
                 }
+                con.Close();
             }
             this.Hide();
             Sahiplen sahiplen = new Sahiplen();

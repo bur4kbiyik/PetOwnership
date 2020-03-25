@@ -21,6 +21,7 @@ namespace Petilan.Sayfalar
         public string DegiskenIrk { get; set; }
         public string DegiskenYas { get; set; }
         public string DegiskenCinsiyet { get; set; }
+
         public Sahiplen()
         {
             InitializeComponent();
@@ -71,7 +72,27 @@ namespace Petilan.Sayfalar
             lbSahiplenTur.Text = DegiskenTur;
             lbSahiplenIrk.Text = DegiskenIrk;
             lbSahiplenYas.Text = DegiskenYas;
-            lbSahiplenCinsiyet.Text = DegiskenCinsiyet; 
+            lbSahiplenCinsiyet.Text = DegiskenCinsiyet;
+
+            SqlCommand com = new SqlCommand();
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,IlanDurumu,ResimKonumu from tbl_Ilanlar where IlanBaslik = '"+lbSahiplenBaslik.Text+"' and HayvanTuru = '"+lbSahiplenTur.Text+"'and HayvanIrk = '"+lbSahiplenIrk.Text+"' and HayvanYas = '"+lbSahiplenYas.Text+"' and HayvanCinsiyet = '"+lbSahiplenCinsiyet.Text+"'and ResimKonumu = '"+pbSahiplenResim.ImageLocation+"'";
+            using (SqlDataReader dr = com.ExecuteReader())
+            {
+                if (dr.Read())
+                {
+                    string ilanDurumu = dr.GetString(5);
+
+                    if (Convert.ToChar(ilanDurumu) == 'P')
+                    {
+                        btSahiplen.Hide();
+                        lbSahiplendirildi.Visible = true;
+                    }
+                }
+                con.Close();
+            }
         }
 
         private void ilanVer_Click(object sender, EventArgs e)
@@ -119,7 +140,7 @@ namespace Petilan.Sayfalar
                     SqlConnection con2 = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
                     con2.Open();
                     com2.Connection = con2;
-                    com2.CommandText = "select * from tbl_Kullanici where KullaniciAdi = '" + tbSahiplenKadi.Text + "' and Adi = '" + tbSahiplenAdi.Text + "' and Soyadi = '" + tbSahiplenSoyadi.Text + "' and TelefonNo = '" + tbTelNo.Text + "'";
+                    com2.CommandText = "select * from tbl_Kullanici where KullaniciAdi = '" + KullaniciAdi + "' and Adi = '" + tbSahiplenAdi.Text + "' and Soyadi = '" + tbSahiplenSoyadi.Text + "' and TelefonNo = '" + tbTelNo.Text + "'";
                     SqlDataReader dr2 = com2.ExecuteReader();
 
                         if (dr2.Read())
@@ -144,7 +165,7 @@ namespace Petilan.Sayfalar
                             try
                             {
                                  if (resimyol == pbSahiplenResim.ImageLocation && ilanbaslik == lbSahiplenBaslik.Text &&
-                                     ilantur == lbSahiplenTur.Text && ilanirk == lbSahiplenIrk.Text && kullaniciadi == tbSahiplenKadi.Text &&
+                                     ilantur == lbSahiplenTur.Text && ilanirk == lbSahiplenIrk.Text && kullaniciadi == KullaniciAdi &&
                                      ilanyas == lbSahiplenYas.Text && ilancinsiyet == lbSahiplenCinsiyet.Text)
                                  {
                                      MessageBox.Show("Aynı ilana birden fazla kez talepte bulunamazsınız.");

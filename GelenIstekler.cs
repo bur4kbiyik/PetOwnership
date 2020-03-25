@@ -93,17 +93,17 @@ namespace Petilan.Sayfalar
             ilanCinsiyetleri[1] = lbGelenIsteklerCinsiyet2;
             ilanCinsiyetleri[2] = lbGelenIsteklerCinsiyet3;
 
-            ilanSahiplenmekIsteyenTelNo[0] = lbIlanSahiniTel1;
-            ilanSahiplenmekIsteyenTelNo[1] = lbIlanSahiniTel2;
-            ilanSahiplenmekIsteyenTelNo[2] = lbIlanSahiniTel3;
+            ilanSahiplenmekIsteyenTelNo[0] = lbIlanSahiplenmekIsteyenTel1;
+            ilanSahiplenmekIsteyenTelNo[1] = lbIlanSahiplenmekIsteyenTel2;
+            ilanSahiplenmekIsteyenTelNo[2] = lbIlanSahiplenmekIsteyenTel3;
 
-            ilanSahiplenmekIsteyenAd[0] = lbIlanSahibiAd1;
-            ilanSahiplenmekIsteyenAd[1] = lbIlanSahibiAd2;
-            ilanSahiplenmekIsteyenAd[2] = lbIlanSahibiAd3;
+            ilanSahiplenmekIsteyenAd[0] = lbIlanSahiplenmekIsteyenAd1;
+            ilanSahiplenmekIsteyenAd[1] = lbIlanSahiplenmekIsteyenAd2;
+            ilanSahiplenmekIsteyenAd[2] = lbIlanSahiplenmekIsteyenAd3;
 
-            ilanSahiplenmekIsteyenSoyad[0] = lbIlanSahibiSoyad1;
-            ilanSahiplenmekIsteyenSoyad[1] = lbIlanSahibiSoyad2;
-            ilanSahiplenmekIsteyenSoyad[2] = lbIlanSahibiSoyad3;
+            ilanSahiplenmekIsteyenSoyad[0] = lbIlanSahiplenmekIsteyenSoyad1;
+            ilanSahiplenmekIsteyenSoyad[1] = lbIlanSahiplenmekIsteyenSoyad2;
+            ilanSahiplenmekIsteyenSoyad[2] = lbIlanSahiplenmekIsteyenSoyad3;
 
             KullaniciAdi = Anasayfa.KullaniciAdi;
             btGelenIsteklerHesap.Text = KullaniciAdi;
@@ -115,35 +115,124 @@ namespace Petilan.Sayfalar
             con.Open();
             com.Connection = con;
             com.CommandText = "select SahiplenecekAdi,SahiplenecekSoyadi,SahiplenecekTelNo,IlanBaslik,IlanTur,IlanIrk,IlanYas,IlanCinsiyet,ResimKonumu from tbl_Sahiplenecek where IlanSahibiId in (select KullaniciId from tbl_Kullanici where KullaniciAdi = '"+KullaniciAdi+"')";
-
-            using (SqlDataReader dr = com.ExecuteReader())
+            try
             {
-                while (dr.Read())
+                using (SqlDataReader dr = com.ExecuteReader())
                 {
-                    string sahiplenmekIsteyenAd = dr.GetString(0);
-                    string sahiplenmekIsteyenSoyad = dr.GetString(1);
-                    string sahiplenmekIsteyenTelNo = dr.GetString(2);
-                    string ilanBasligi = dr.GetString(3);
-                    string ilanTuru = dr.GetString(4);
-                    string ilanIrki = dr.GetString(5);
-                    string ilanYasi = dr.GetString(6);
-                    string ilanCinsiyeti = dr.GetString(7);
-                    var resimYolu = dr.GetString(8);
+                    while (dr.Read())
+                    {
+                        string sahiplenmekIsteyenAd = dr.GetString(0);
+                        string sahiplenmekIsteyenSoyad = dr.GetString(1);
+                        string sahiplenmekIsteyenTelNo = dr.GetString(2);
+                        string ilanBasligi = dr.GetString(3);
+                        string ilanTuru = dr.GetString(4);
+                        string ilanIrki = dr.GetString(5);
+                        string ilanYasi = dr.GetString(6);
+                        string ilanCinsiyeti = dr.GetString(7);
+                        var resimYolu = dr.GetString(8);
 
-                    ilanSahiplenmekIsteyenAd[sayac].Text = sahiplenmekIsteyenAd;
-                    ilanSahiplenmekIsteyenSoyad[sayac].Text = sahiplenmekIsteyenSoyad;
-                    ilanSahiplenmekIsteyenTelNo[sayac].Text = sahiplenmekIsteyenTelNo;
-                    ilanBasliklari[sayac].Text = ilanBasligi;
-                    ilanTurleri[sayac].Text = ilanTuru;
-                    ilanIrklari[sayac].Text = ilanIrki;
-                    ilanYaslari[sayac].Text = ilanYasi;
-                    ilanCinsiyetleri[sayac].Text = ilanCinsiyeti;
-                    pictureBoxs[sayac].ImageLocation = resimYolu;
+                        ilanSahiplenmekIsteyenAd[sayac].Text = sahiplenmekIsteyenAd;
+                        ilanSahiplenmekIsteyenSoyad[sayac].Text = sahiplenmekIsteyenSoyad;
+                        ilanSahiplenmekIsteyenTelNo[sayac].Text = sahiplenmekIsteyenTelNo;
+                        ilanBasliklari[sayac].Text = ilanBasligi;
+                        ilanTurleri[sayac].Text = ilanTuru;
+                        ilanIrklari[sayac].Text = ilanIrki;
+                        ilanYaslari[sayac].Text = ilanYasi;
+                        ilanCinsiyetleri[sayac].Text = ilanCinsiyeti;
+                        pictureBoxs[sayac].ImageLocation = resimYolu;
 
-                    sayac++;
+                        sayac++;
+                    }
                 }
+                con.Close();
             }
-            con.Close();
+            catch (Exception hata)
+            {
+                MessageBox.Show("Fazla ilan talebi geldi veya ilan isteği bulunmamakta. Eğer fazla ilan geldiyse, ilanlar hakkında ki gerekli işlemleri yapınız." + hata);
+            }
+            
+        }
+
+        private void btOnayla1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlCommand com = new SqlCommand();
+                SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "update tbl_Ilanlar set IlanDurumu = 'P' where IlanBaslik = '" + lbGelenIsteklerBaslik1.Text + "' and HayvanTuru = '" + lbGelenIsteklerTur1.Text + "' and HayvanIrk = '" + lbGelenIsteklerIrk1.Text + "' and HayvanYas = '" + lbGelenIsteklerYas1.Text + "' and HayvanCinsiyet = '" + lbGelenIsteklerCinsiyet1.Text + "' and ResimKonumu = '" + pictureBox0.ImageLocation + "'";
+                SqlDataReader dr = com.ExecuteReader();
+                con.Close();
+
+                SqlConnection con2 = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+                con2.Open();
+                SqlCommand com2 = new SqlCommand();
+                com2.Connection = con2;
+                com2.CommandText = "delete from tbl_Sahiplenecek where SahiplenecekAdi = '" + lbIlanSahiplenmekIsteyenAd1.Text + "' and SahiplenecekSoyadi = '" + lbIlanSahiplenmekIsteyenSoyad1.Text + "' and SahiplenecekTelNo = '" + lbIlanSahiplenmekIsteyenTel1.Text + "' and IlanBaslik = '" + lbGelenIsteklerBaslik1.Text + "'  and IlanTur = '" + lbGelenIsteklerTur1.Text + "' and IlanIrk = '" + lbGelenIsteklerIrk1.Text + "' and IlanYas = '" + lbGelenIsteklerYas1.Text + "' and IlanCinsiyet = '" + lbGelenIsteklerCinsiyet1.Text + "' and ResimKonumu = '" + pictureBox0.ImageLocation + "'";
+                SqlDataReader dr2 = com2.ExecuteReader();
+                com2.ExecuteNonQuery();
+                con2.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ilan onaylama işlemi başarılı!");
+            }
+            
+        }
+
+        private void btOnayla2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlCommand com = new SqlCommand();
+                SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "update tbl_Ilanlar set IlanDurumu = 'P' where IlanBaslik = '" + lbGelenIsteklerBaslik2.Text + "' and HayvanTuru = '" + lbGelenIsteklerTur2.Text + "' and HayvanIrk = '" + lbGelenIsteklerIrk2.Text + "' and HayvanYas = '" + lbGelenIsteklerYas2.Text + "' and HayvanCinsiyet = '" + lbGelenIsteklerCinsiyet2.Text + "' and ResimKonumu = '" + pictureBox1.ImageLocation + "'";
+                SqlDataReader dr = com.ExecuteReader();
+                con.Close();
+
+                SqlConnection con2 = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+                con2.Open();
+                SqlCommand com2 = new SqlCommand();
+                com2.Connection = con2;
+                com2.CommandText = "delete from tbl_Sahiplenecek where SahiplenecekAdi = '" + lbIlanSahiplenmekIsteyenAd2.Text + "' and SahiplenecekSoyadi = '" + lbIlanSahiplenmekIsteyenSoyad2.Text + "' and SahiplenecekTelNo = '" + lbIlanSahiplenmekIsteyenTel2.Text + "' and IlanBaslik = '" + lbGelenIsteklerBaslik2.Text + "'  and IlanTur = '" + lbGelenIsteklerTur2.Text + "' and IlanIrk = '" + lbGelenIsteklerIrk2.Text + "' and IlanYas = '" + lbGelenIsteklerYas2.Text + "' and IlanCinsiyet = '" + lbGelenIsteklerCinsiyet2.Text + "' and ResimKonumu = '" + pictureBox1.ImageLocation + "'";
+                SqlDataReader dr2 = com2.ExecuteReader();
+                com2.ExecuteNonQuery();
+                con2.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ilan onaylama işlemi başarılı!");
+            }
+        }
+
+        private void btOnayla3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlCommand com = new SqlCommand();
+                SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "update tbl_Ilanlar set IlanDurumu = 'P' where IlanBaslik = '" + lbGelenIsteklerBaslik3.Text + "' and HayvanTuru = '" + lbGelenIsteklerTur3.Text + "' and HayvanIrk = '" + lbGelenIsteklerIrk3.Text + "' and HayvanYas = '" + lbGelenIsteklerYas3.Text + "' and HayvanCinsiyet = '" + lbGelenIsteklerCinsiyet3.Text + "' and ResimKonumu = '" + pictureBox2.ImageLocation + "'";
+                SqlDataReader dr = com.ExecuteReader();
+                con.Close();
+
+                SqlConnection con2 = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+                con2.Open();
+                SqlCommand com2 = new SqlCommand();
+                com2.Connection = con2;
+                com2.CommandText = "delete from tbl_Sahiplenecek where SahiplenecekAdi = '" + lbIlanSahiplenmekIsteyenAd3.Text + "' and SahiplenecekSoyadi = '" + lbIlanSahiplenmekIsteyenSoyad3.Text + "' and SahiplenecekTelNo = '" + lbIlanSahiplenmekIsteyenTel3.Text + "' and IlanBaslik = '" + lbGelenIsteklerBaslik3.Text + "'  and IlanTur = '" + lbGelenIsteklerTur3.Text + "' and IlanIrk = '" + lbGelenIsteklerIrk3.Text + "' and IlanYas = '" + lbGelenIsteklerYas3.Text + "' and IlanCinsiyet = '" + lbGelenIsteklerCinsiyet3.Text + "' and ResimKonumu = '" + pictureBox2.ImageLocation + "'";
+                SqlDataReader dr2 = com2.ExecuteReader();
+                com2.ExecuteNonQuery();
+                con2.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ilan onaylama işlemi başarılı!");
+            }
         }
     }
 }
