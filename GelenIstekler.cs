@@ -13,7 +13,6 @@ namespace Petilan.Sayfalar
 {
     public partial class GelenIstekler : Form
     {
-
         public string KullaniciAdi { get; set; }
         public GelenIstekler()
         {

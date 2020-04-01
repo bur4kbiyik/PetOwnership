@@ -1,8 +1,5 @@
-Yarım kalan etkileşim kısmı tamamlandı.
+Düzeltme yapıldı.
 
-Bir ilan için sahiplenme isteği gönderildiğinde, ilan sahibi gelen isteği
-onayladığı zaman ilan gelen istekler kısmından kalkıyor ve anasayfadan sahiplendirilen
-ilana tıklanırsa Sahiplen butonu kalkıyor ve onun yerinde Sahiplendirildi yazıyor.
-
-İlan onaylandığında, onaylanan ilanın durumu Ilanlar tablosun da pasif duruma geliyor
-ve Sahiplenme isteklerinin depolandığı tablodan da kalkıyor.
+İlan sahiplenme sayfasın da, ilanı sahiplenmek isteyen kişinin kullanıcı adı, adı, soyadı
+ve telefon numarasının yazıldığı textboxlar yerine, sadece sahiplen butonu bırakılmış ve butona 
+basıldığında sahiplenen kişinin gerekli bilgilerini otomatik çekilmektedir.

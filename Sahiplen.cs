@@ -48,9 +48,45 @@ namespace Petilan.Sayfalar
 
         private void Sahiplen_Load(object sender, EventArgs e)
         {
+
             KullaniciAdi = Anasayfa.KullaniciAdi;
             btSahiplenHesap.Text = KullaniciAdi;
+            SqlCommand com = new SqlCommand();
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select * from tbl_Kullanici where KullaniciAdi='" + KullaniciAdi + "'";
+            using (SqlDataReader dr = com.ExecuteReader())
+            {
+                if (dr.Read())
+                {
+                    string veritabaniKullaniciAdi = dr.GetString(1);
+                    string veritabaniSifre = dr.GetString(2);
+                    string veritabaniAdi = dr.GetString(3);
+                    string veritabaniSoyadi = dr.GetString(4);
+                    string veritabaniMail = dr.GetString(5);
+                    string veritabaniTelefon = dr.GetString(6);
+                    KullaniciAdi = Anasayfa.KullaniciAdi;
 
+                    tbSahiplenKadi.Text = veritabaniKullaniciAdi;
+                    btSahiplenHesap.Text = KullaniciAdi;
+                    tbSahiplenAdi.Text = veritabaniAdi;
+                    tbSahiplenSoyadi.Text = veritabaniSoyadi;
+                    tbTelNo.Text = veritabaniTelefon;
+                }
+                con.Close();
+            }
+            tbSahiplenKadi.Text = KullaniciAdi;
+
+            label1.Visible = false;
+            label2.Visible = false;
+            label3.Visible = false;
+            label4.Visible = false;
+            
+            tbSahiplenAdi.Visible = false;
+            tbSahiplenSoyadi.Visible = false;
+            tbTelNo.Visible = false;
+            tbSahiplenKadi.Visible = false;
             //MessageBox.Show(DegiskenResim); // denemek için kullanılmıştır
             //MessageBox.Show(DegiskenBaslik);
             //MessageBox.Show(DegiskenTur);
@@ -74,8 +110,7 @@ namespace Petilan.Sayfalar
             lbSahiplenYas.Text = DegiskenYas;
             lbSahiplenCinsiyet.Text = DegiskenCinsiyet;
 
-            SqlCommand com = new SqlCommand();
-            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+
             con.Open();
             com.Connection = con;
             com.CommandText = "select IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,IlanDurumu,ResimKonumu from tbl_Ilanlar where IlanBaslik = '"+lbSahiplenBaslik.Text+"' and HayvanTuru = '"+lbSahiplenTur.Text+"'and HayvanIrk = '"+lbSahiplenIrk.Text+"' and HayvanYas = '"+lbSahiplenYas.Text+"' and HayvanCinsiyet = '"+lbSahiplenCinsiyet.Text+"'and ResimKonumu = '"+pbSahiplenResim.ImageLocation+"'";
