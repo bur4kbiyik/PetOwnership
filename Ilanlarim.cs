@@ -17,7 +17,16 @@ namespace Petilan.Sayfalar
         {
             InitializeComponent();
         }
+        public static int DegiskenId { get; set; }
+        public static string DegiskenResim { get; set; }
+        public static string DegiskenBaslik { get; set; }
+        public static string DegiskenTur { get; set; }
+        public static string DegiskenIrk { get; set; }
+        public static string DegiskenYas { get; set; }
+        public static string DegiskenCinsiyet { get; set; }
         public string KullaniciAdi { get; set; }
+        public static string Kontrol { get; set; }
+
         PictureBox[] pictureBoxs = new PictureBox[6];
         Label[] ilanBasliklari = new Label[6];
         Label[] ilanTurleri = new Label[6];
@@ -171,6 +180,282 @@ namespace Petilan.Sayfalar
             this.Hide();
             GelenIstekler gi = new GelenIstekler();
             gi.ShowDialog();
+        }
+        string kontrol = "";
+        private void lbIlanlarimBaslik1_Click(object sender, EventArgs e)
+        {
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
+
+            DegiskenResim = pictureBox0.ImageLocation;
+            DegiskenBaslik = lbIlanlarimBaslik1.Text;
+            DegiskenTur = lbIlanlarimTur1.Text;
+            DegiskenIrk = lbIlanlarimIrk1.Text;
+            DegiskenYas = lbIlanlarimYas1.Text;
+            DegiskenCinsiyet = lbIlanlarimCinsiyet1.Text;
+
+            SqlCommand com = new SqlCommand();
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select ResimKonumu,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,KullaniciNo from tbl_Ilanlar where ResimKonumu = '" + DegiskenResim + "' and IlanBaslik = '" + DegiskenBaslik + "' and HayvanTuru = '" + DegiskenTur + "' and HayvanIrk = '" + DegiskenIrk + "' and HayvanYas = '" + DegiskenYas + "' and HayvanCinsiyet = '" + DegiskenCinsiyet + "'";
+
+            using (SqlDataReader dr = com.ExecuteReader())
+            {
+                if (dr.Read())
+                {
+                    var resimKonum1 = dr.GetString(0);
+                    /*MessageBox.Show(resimKonum1);*/ // denemek için kullanılmıştır
+                    string ilanBaslik1 = dr.GetString(1);
+                    string ilanTur1 = dr.GetString(2);
+                    string ilanIrk1 = dr.GetString(3);
+                    string ilanYas1 = dr.GetString(4);
+                    string ilanCinsiyet1 = dr.GetString(5);
+                    DegiskenId = dr.GetInt32(6);
+                    Sahiplen shpln = new Sahiplen();
+                    shpln.pbSahiplenResim.ImageLocation = resimKonum1;
+                    shpln.lbSahiplenBaslik.Text = ilanBaslik1;
+                    shpln.lbSahiplenTur.Text = ilanTur1;
+                    shpln.lbSahiplenIrk.Text = ilanIrk1;
+                    shpln.lbSahiplenYas.Text = ilanYas1;
+                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet1;
+                }
+                con.Close();
+            }
+            this.Hide();
+            Sahiplen sahiplen = new Sahiplen();
+            sahiplen.btSahiplen.Hide();
+            sahiplen.ShowDialog();
+        }
+
+        private void lbIlanlarimBaslik2_Click(object sender, EventArgs e)
+        {
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
+
+            DegiskenResim = pictureBox1.ImageLocation;
+            DegiskenBaslik = lbIlanlarimBaslik2.Text;
+            DegiskenTur = lbIlanlarimTur2.Text;
+            DegiskenIrk = lbIlanlarimIrk2.Text;
+            DegiskenYas = lbIlanlarimYas2.Text;
+            DegiskenCinsiyet = lbIlanlarimCinsiyet2.Text;
+
+            SqlCommand com = new SqlCommand();
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select ResimKonumu,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,KullaniciNo from tbl_Ilanlar where ResimKonumu = '" + DegiskenResim + "' and IlanBaslik = '" + DegiskenBaslik + "' and HayvanTuru = '" + DegiskenTur + "' and HayvanIrk = '" + DegiskenIrk + "' and HayvanYas = '" + DegiskenYas + "' and HayvanCinsiyet = '" + DegiskenCinsiyet + "'";
+
+            using (SqlDataReader dr = com.ExecuteReader())
+            {
+                if (dr.Read())
+                {
+                    var resimKonum2 = dr.GetString(0);
+                    /*MessageBox.Show(resimKonum1);*/ // denemek için kullanılmıştır
+                    string ilanBaslik2 = dr.GetString(1);
+                    string ilanTur2 = dr.GetString(2);
+                    string ilanIrk2 = dr.GetString(3);
+                    string ilanYas2 = dr.GetString(4);
+                    string ilanCinsiyet2 = dr.GetString(5);
+                    DegiskenId = dr.GetInt32(6);
+                    Sahiplen shpln = new Sahiplen();
+                    shpln.pbSahiplenResim.ImageLocation = resimKonum2;
+                    shpln.lbSahiplenBaslik.Text = ilanBaslik2;
+                    shpln.lbSahiplenTur.Text = ilanTur2;
+                    shpln.lbSahiplenIrk.Text = ilanIrk2;
+                    shpln.lbSahiplenYas.Text = ilanYas2;
+                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet2;
+                }
+                con.Close();
+            }
+            this.Hide();
+            Sahiplen sahiplen = new Sahiplen();
+            sahiplen.btSahiplen.Hide();
+            sahiplen.ShowDialog();
+        }
+
+        private void lbIlanlarimBaslik3_Click(object sender, EventArgs e)
+        {
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
+
+            DegiskenResim = pictureBox2.ImageLocation;
+            DegiskenBaslik = lbIlanlarimBaslik3.Text;
+            DegiskenTur = lbIlanlarimTur3.Text;
+            DegiskenIrk = lbIlanlarimIrk3.Text;
+            DegiskenYas = lbIlanlarimYas3.Text;
+            DegiskenCinsiyet = lbIlanlarimCinsiyet3.Text;
+
+            SqlCommand com = new SqlCommand();
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select ResimKonumu,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,KullaniciNo from tbl_Ilanlar where ResimKonumu = '" + DegiskenResim + "' and IlanBaslik = '" + DegiskenBaslik + "' and HayvanTuru = '" + DegiskenTur + "' and HayvanIrk = '" + DegiskenIrk + "' and HayvanYas = '" + DegiskenYas + "' and HayvanCinsiyet = '" + DegiskenCinsiyet + "'";
+
+            using (SqlDataReader dr = com.ExecuteReader())
+            {
+                if (dr.Read())
+                {
+                    var resimKonum3 = dr.GetString(0);
+                    /*MessageBox.Show(resimKonum1);*/ // denemek için kullanılmıştır
+                    string ilanBaslik3 = dr.GetString(1);
+                    string ilanTur3 = dr.GetString(2);
+                    string ilanIrk3 = dr.GetString(3);
+                    string ilanYas3 = dr.GetString(4);
+                    string ilanCinsiyet3 = dr.GetString(5);
+                    DegiskenId = dr.GetInt32(6);
+                    Sahiplen shpln = new Sahiplen();
+                    shpln.pbSahiplenResim.ImageLocation = resimKonum3;
+                    shpln.lbSahiplenBaslik.Text = ilanBaslik3;
+                    shpln.lbSahiplenTur.Text = ilanTur3;
+                    shpln.lbSahiplenIrk.Text = ilanIrk3;
+                    shpln.lbSahiplenYas.Text = ilanYas3;
+                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet3;
+                }
+                con.Close();
+            }
+            this.Hide();
+            Sahiplen sahiplen = new Sahiplen();
+            sahiplen.btSahiplen.Hide();
+            sahiplen.ShowDialog();
+        }
+
+        private void lbIlanlarimBaslik4_Click(object sender, EventArgs e)
+        {
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
+
+            DegiskenResim = pictureBox3.ImageLocation;
+            DegiskenBaslik = lbIlanlarimBaslik4.Text;
+            DegiskenTur = lbIlanlarimTur4.Text;
+            DegiskenIrk = lbIlanlarimIrk4.Text;
+            DegiskenYas = lbIlanlarimYas4.Text;
+            DegiskenCinsiyet = lbIlanlarimCinsiyet4.Text;
+
+            SqlCommand com = new SqlCommand();
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select ResimKonumu,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,KullaniciNo from tbl_Ilanlar where ResimKonumu = '" + DegiskenResim + "' and IlanBaslik = '" + DegiskenBaslik + "' and HayvanTuru = '" + DegiskenTur + "' and HayvanIrk = '" + DegiskenIrk + "' and HayvanYas = '" + DegiskenYas + "' and HayvanCinsiyet = '" + DegiskenCinsiyet + "'";
+
+            using (SqlDataReader dr = com.ExecuteReader())
+            {
+                if (dr.Read())
+                {
+                    var resimKonum4 = dr.GetString(0);
+                    /*MessageBox.Show(resimKonum1);*/ // denemek için kullanılmıştır
+                    string ilanBaslik4 = dr.GetString(1);
+                    string ilanTur4 = dr.GetString(2);
+                    string ilanIrk4 = dr.GetString(3);
+                    string ilanYas4 = dr.GetString(4);
+                    string ilanCinsiyet4 = dr.GetString(5);
+                    DegiskenId = dr.GetInt32(6);
+                    Sahiplen shpln = new Sahiplen();
+                    shpln.pbSahiplenResim.ImageLocation = resimKonum4;
+                    shpln.lbSahiplenBaslik.Text = ilanBaslik4;
+                    shpln.lbSahiplenTur.Text = ilanTur4;
+                    shpln.lbSahiplenIrk.Text = ilanIrk4;
+                    shpln.lbSahiplenYas.Text = ilanYas4;
+                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet4;
+                }
+                con.Close();
+            }
+            this.Hide();
+            Sahiplen sahiplen = new Sahiplen();
+            sahiplen.btSahiplen.Hide();
+            sahiplen.ShowDialog();
+        }
+
+        private void lbIlanlarimBaslik5_Click(object sender, EventArgs e)
+        {
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
+
+            DegiskenResim = pictureBox4.ImageLocation;
+            DegiskenBaslik = lbIlanlarimBaslik5.Text;
+            DegiskenTur = lbIlanlarimTur5.Text;
+            DegiskenIrk = lbIlanlarimIrk5.Text;
+            DegiskenYas = lbIlanlarimYas5.Text;
+            DegiskenCinsiyet = lbIlanlarimCinsiyet5.Text;
+
+            SqlCommand com = new SqlCommand();
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select ResimKonumu,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,KullaniciNo from tbl_Ilanlar where ResimKonumu = '" + DegiskenResim + "' and IlanBaslik = '" + DegiskenBaslik + "' and HayvanTuru = '" + DegiskenTur + "' and HayvanIrk = '" + DegiskenIrk + "' and HayvanYas = '" + DegiskenYas + "' and HayvanCinsiyet = '" + DegiskenCinsiyet + "'";
+
+            using (SqlDataReader dr = com.ExecuteReader())
+            {
+                if (dr.Read())
+                {
+                    var resimKonum5 = dr.GetString(0);
+                    /*MessageBox.Show(resimKonum1);*/ // denemek için kullanılmıştır
+                    string ilanBaslik5 = dr.GetString(1);
+                    string ilanTur5 = dr.GetString(2);
+                    string ilanIrk5 = dr.GetString(3);
+                    string ilanYas5 = dr.GetString(4);
+                    string ilanCinsiyet5 = dr.GetString(5);
+                    DegiskenId = dr.GetInt32(6);
+                    Sahiplen shpln = new Sahiplen();
+                    shpln.pbSahiplenResim.ImageLocation = resimKonum5;
+                    shpln.lbSahiplenBaslik.Text = ilanBaslik5;
+                    shpln.lbSahiplenTur.Text = ilanTur5;
+                    shpln.lbSahiplenIrk.Text = ilanIrk5;
+                    shpln.lbSahiplenYas.Text = ilanYas5;
+                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet5;
+                }
+                con.Close();
+            }
+            this.Hide();
+            Sahiplen sahiplen = new Sahiplen();
+            sahiplen.btSahiplen.Hide();
+            sahiplen.ShowDialog();
+        }
+
+        private void lbIlanlarimBaslik6_Click(object sender, EventArgs e)
+        {
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
+
+            DegiskenResim = pictureBox5.ImageLocation;
+            DegiskenBaslik = lbIlanlarimBaslik6.Text;
+            DegiskenTur = lbIlanlarimTur6.Text;
+            DegiskenIrk = lbIlanlarimIrk6.Text;
+            DegiskenYas = lbIlanlarimYas6.Text;
+            DegiskenCinsiyet = lbIlanlarimCinsiyet6.Text;
+
+            SqlCommand com = new SqlCommand();
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select ResimKonumu,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,KullaniciNo from tbl_Ilanlar where ResimKonumu = '" + DegiskenResim + "' and IlanBaslik = '" + DegiskenBaslik + "' and HayvanTuru = '" + DegiskenTur + "' and HayvanIrk = '" + DegiskenIrk + "' and HayvanYas = '" + DegiskenYas + "' and HayvanCinsiyet = '" + DegiskenCinsiyet + "'";
+
+            using (SqlDataReader dr = com.ExecuteReader())
+            {
+                if (dr.Read())
+                {
+                    var resimKonum6 = dr.GetString(0);
+                    /*MessageBox.Show(resimKonum1);*/ // denemek için kullanılmıştır
+                    string ilanBaslik6 = dr.GetString(1);
+                    string ilanTur6 = dr.GetString(2);
+                    string ilanIrk6 = dr.GetString(3);
+                    string ilanYas6 = dr.GetString(4);
+                    string ilanCinsiyet6 = dr.GetString(5);
+                    DegiskenId = dr.GetInt32(6);
+                    Sahiplen shpln = new Sahiplen();
+                    shpln.pbSahiplenResim.ImageLocation = resimKonum6;
+                    shpln.lbSahiplenBaslik.Text = ilanBaslik6;
+                    shpln.lbSahiplenTur.Text = ilanTur6;
+                    shpln.lbSahiplenIrk.Text = ilanIrk6;
+                    shpln.lbSahiplenYas.Text = ilanYas6;
+                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet6;
+                }
+                con.Close();
+            }
+            this.Hide();
+            Sahiplen sahiplen = new Sahiplen();
+            sahiplen.btSahiplen.Hide();
+            sahiplen.ShowDialog();
         }
     }
 }

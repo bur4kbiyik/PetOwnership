@@ -1,5 +1,4 @@
-Düzeltme yapıldı.
+Bu hafta, ilanlara yorum yapma sayfası eklendi.
 
-İlan sahiplenme sayfasın da, ilanı sahiplenmek isteyen kişinin kullanıcı adı, adı, soyadı
-ve telefon numarasının yazıldığı textboxlar yerine, sadece sahiplen butonu bırakılmış ve butona 
-basıldığında sahiplenen kişinin gerekli bilgilerini otomatik çekilmektedir.
+Her ilanın kendi id numarasına göre yorumları sayfa açıldığında load oluyor. 
+Kullanıcılar birbirlerinin yorumlarını göremiyor fakat ilan sahibi tüm yorumları görebiliyor.
