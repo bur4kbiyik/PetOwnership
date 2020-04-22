@@ -78,7 +78,7 @@ namespace Petilan.Sayfalar
 
             ilanTurleri[0] = lbGelenIsteklerTur1;
             ilanTurleri[1] = lbGelenIsteklerTur2;
-            ilanTurleri[1] = lbGelenIsteklerTur3;
+            ilanTurleri[2] = lbGelenIsteklerTur3;
 
             ilanIrklari[0] = lbGelenIsteklerIrk1;
             ilanIrklari[1] = lbGelenIsteklerIrk2;

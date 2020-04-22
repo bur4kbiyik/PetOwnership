@@ -275,11 +275,12 @@ namespace Petilan
             Ilanlarim ilanlarim = new Ilanlarim();
             ilanlarim.ShowDialog();
         }
-        public static string Kontrol { get; set; }
+        public static string Kontrol2 { get; set; }
+        string kontrol2 = "";
         private void lbRastgeleBaslik1_Click(object sender, EventArgs e)
         {
-            kontrol = "tiklandi";
-            Kontrol = kontrol;
+            kontrol2 = "tiklandi";
+            Kontrol2 = kontrol2;
             DegiskenResim = pictureBox1.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik1.Text;
@@ -323,8 +324,8 @@ namespace Petilan
 
         private void lbRastgeleBaslik2_Click(object sender, EventArgs e)
         {
-            kontrol = "tiklandi";
-            Kontrol = kontrol;
+            kontrol2 = "tiklandi";
+            Kontrol2 = kontrol2;
             DegiskenResim = pictureBox2.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik2.Text;
@@ -368,8 +369,8 @@ namespace Petilan
 
         private void lbRastgeleBaslik3_Click(object sender, EventArgs e)
         {
-            kontrol = "tiklandi";
-            Kontrol = kontrol;
+            kontrol2 = "tiklandi";
+            Kontrol2 = kontrol2;
             DegiskenResim = pictureBox3.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik3.Text;
@@ -413,8 +414,8 @@ namespace Petilan
 
         private void lbRastgeleBaslik4_Click(object sender, EventArgs e)
         {
-            kontrol = "tiklandi";
-            Kontrol = kontrol;
+            kontrol2 = "tiklandi";
+            Kontrol2 = kontrol2;
             DegiskenResim = pictureBox4.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik4.Text;
@@ -458,8 +459,8 @@ namespace Petilan
 
         private void lbRastgeleBaslik5_Click(object sender, EventArgs e)
         {
-            kontrol = "tiklandi";
-            Kontrol = kontrol;
+            kontrol2 = "tiklandi";
+            Kontrol2 = kontrol2;
             DegiskenResim = pictureBox5.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik5.Text;
@@ -501,11 +502,11 @@ namespace Petilan
             sahiplen.ShowDialog();
         }
 
-        string kontrol = "";
+        
         private void lbRastgeleBaslik6_Click(object sender, EventArgs e)
         {
-            kontrol = "tiklandi";
-            Kontrol = kontrol;
+            kontrol2 = "tiklandi";
+            Kontrol2 = kontrol2;
             DegiskenResim = pictureBox6.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik6.Text;
