@@ -24,10 +24,10 @@ namespace Petilan.Sayfalar
         public string DegiskenCinsiyet { get; set; }
         public string Yorum { get; set; }
         public int IlanId { get; set; }
-        public string Kime { get; set; }
         public string Kimden { get; set; }
-        public string MesajTarih { get; set; }
+        public string Kime { get; set; }
         public string Mesaj { get; set; }
+        public string Tarih { get; set; }
 
         public Sahiplen()
         {
@@ -73,149 +73,21 @@ namespace Petilan.Sayfalar
             //MessageBox.Show(DegiskenCinsiyet);
             //MessageBox.Show(DegiskenId.ToString());
 
-            if (Anasayfa.Kontrol2 == "tiklandi")
-            {
-                DegiskenResim = Anasayfa.DegiskenResim;
-                DegiskenBaslik = Anasayfa.DegiskenBaslik;
-                DegiskenTur = Anasayfa.DegiskenTur;
-                DegiskenIrk = Anasayfa.DegiskenIrk;
-                DegiskenYas = Anasayfa.DegiskenYas;
-                DegiskenCinsiyet = Anasayfa.DegiskenCinsiyet;
-                DegiskenId = Anasayfa.DegiskenId;
+            DegiskenResim = Anasayfa.DegiskenResim;
+            DegiskenBaslik = Anasayfa.DegiskenBaslik;
+            DegiskenTur = Anasayfa.DegiskenTur;
+            DegiskenIrk = Anasayfa.DegiskenIrk;
+            DegiskenYas = Anasayfa.DegiskenYas;
+            DegiskenCinsiyet = Anasayfa.DegiskenCinsiyet;
+            DegiskenId = Anasayfa.DegiskenId;
 
-                pbSahiplenResim.ImageLocation = DegiskenResim;
-                lbSahiplenBaslik.Text = DegiskenBaslik;
-                lbSahiplenTur.Text = DegiskenTur;
-                lbSahiplenIrk.Text = DegiskenIrk;
-                lbSahiplenYas.Text = DegiskenYas;
-                lbSahiplenCinsiyet.Text = DegiskenCinsiyet;
+            pbSahiplenResim.ImageLocation = DegiskenResim;
+            lbSahiplenBaslik.Text = DegiskenBaslik;
+            lbSahiplenTur.Text = DegiskenTur;
+            lbSahiplenIrk.Text = DegiskenIrk;
+            lbSahiplenYas.Text = DegiskenYas;
+            lbSahiplenCinsiyet.Text = DegiskenCinsiyet;
 
-                SqlConnection con2 = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
-                SqlCommand com2 = new SqlCommand();
-                con2.Open();
-                com2.Connection = con2;
-                com2.CommandText = "select IlanId,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,IlanDurumu,ResimKonumu from tbl_Ilanlar where IlanBaslik = '" + lbSahiplenBaslik.Text + "' and HayvanTuru = '" + lbSahiplenTur.Text + "'and HayvanIrk = '" + lbSahiplenIrk.Text + "' and HayvanYas = '" + lbSahiplenYas.Text + "' and HayvanCinsiyet = '" + lbSahiplenCinsiyet.Text + "'and ResimKonumu = '" + pbSahiplenResim.ImageLocation + "'";
-                SqlDataReader dr2 = com2.ExecuteReader();
-                if (dr2.Read())
-                {
-                    int ilanid = dr2.GetInt32(0);
-                    IlanId = ilanid;
-                    //MessageBox.Show(IlanId.ToString());
-                    dr2.Close();
-
-                    SqlCommand com3 = new SqlCommand();
-                    com3.Connection = con2;
-                    com3.CommandText = "select * from tbl_Mesajlar";
-                    SqlDataReader dr3 = com3.ExecuteReader();
-                    while (dr3.Read())
-                    {
-                        string kimden = dr3.GetString(1);
-                        string kime = dr3.GetString(2);
-                        string mesaj = dr3.GetString(3);
-                        string tarihvesaat = dr3.GetString(4);
-
-                        Kimden = kimden;
-                        Kime = kime;
-                        Mesaj = mesaj;
-                        MesajTarih = tarihvesaat;
-                    }
-
-                    dr3.Close();
-
-                    SqlCommand com4satir = new SqlCommand();
-                    SqlDataAdapter da = new SqlDataAdapter(com4satir);
-                    com4satir.Connection = con2;
-                    com4satir.CommandText = "select * from tbl_Mesajlar where IlanId = " + IlanId + " and Kimden = '" + KullaniciAdi + "' or Kimden = '" + Kime + "'";
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    int satir = dt.Rows.Count;
-
-                    int sayac = 0;
-
-                    SqlCommand com4 = new SqlCommand();
-                    com4.Connection = con2;
-                    com4.CommandText = "select * from tbl_Mesajlar where IlanId = " + IlanId + " and Kimden = '" + KullaniciAdi + "' or Kimden = '" + Kime + "'";
-                    SqlDataReader dr4 = com4.ExecuteReader();
-                    while (dr4.Read())
-                    {
-                        string ozelkimden = dr4.GetString(1);
-                        string ozelmesaj = dr4.GetString(3);
-                        string ozeltarih = dr4.GetString(4);
-                        lbMesajlar.Items.Add(ozelkimden + " > " + ozelmesaj + " > " + ozeltarih);
-                        if (satir == sayac)
-                        {
-                            break;
-                        }
-                        sayac++;
-                    }
-                }
-                con2.Close();
-            }
-
-            if (Ilanlarim.Kontrol == "tiklandi")
-            {
-                DegiskenResim = Ilanlarim.DegiskenResim;
-                DegiskenBaslik = Ilanlarim.DegiskenBaslik;
-                DegiskenTur = Ilanlarim.DegiskenTur;
-                DegiskenIrk = Ilanlarim.DegiskenIrk;
-                DegiskenYas = Ilanlarim.DegiskenYas;
-                DegiskenCinsiyet = Ilanlarim.DegiskenCinsiyet;
-                DegiskenId = Ilanlarim.DegiskenId;
-
-                pbSahiplenResim.ImageLocation = DegiskenResim;
-                lbSahiplenBaslik.Text = DegiskenBaslik;
-                lbSahiplenTur.Text = DegiskenTur;
-                lbSahiplenIrk.Text = DegiskenIrk;
-                lbSahiplenYas.Text = DegiskenYas;
-                lbSahiplenCinsiyet.Text = DegiskenCinsiyet;
-
-                SqlConnection con2 = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
-                SqlCommand com2 = new SqlCommand();
-                con2.Open();
-                com2.Connection = con2;
-                com2.CommandText = "select IlanId,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,IlanDurumu,ResimKonumu from tbl_Ilanlar where IlanBaslik = '" + lbSahiplenBaslik.Text + "' and HayvanTuru = '" + lbSahiplenTur.Text + "'and HayvanIrk = '" + lbSahiplenIrk.Text + "' and HayvanYas = '" + lbSahiplenYas.Text + "' and HayvanCinsiyet = '" + lbSahiplenCinsiyet.Text + "'and ResimKonumu = '" + pbSahiplenResim.ImageLocation + "'";
-                SqlDataReader dr2 = com2.ExecuteReader();
-                if (dr2.Read())
-                {
-                    int ilanid = dr2.GetInt32(0);
-                    IlanId = ilanid;
-                    //MessageBox.Show(IlanId.ToString());
-                    dr2.Close();
-
-                    SqlCommand com3satir = new SqlCommand();
-                    SqlDataAdapter da = new SqlDataAdapter(com3satir);
-                    com3satir.Connection = con2;
-                    com3satir.CommandText = "select * from tbl_Mesajlar where IlanId = " + IlanId + "";
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    int satir = dt.Rows.Count;
-                    //MessageBox.Show(satir.ToString());
-
-                    int sayac = 0;
-
-                    SqlCommand com3 = new SqlCommand();
-                    com3.Connection = con2;
-                    com3.CommandText = "select * from tbl_Mesajlar where IlanId = " + IlanId + "";
-                    using (SqlDataReader dr3 = com3.ExecuteReader()) 
-                    {
-                        while (dr3.Read())
-                        {
-                            string kimden = dr3.GetString(1);
-                            string kime = dr3.GetString(2);
-                            string mesaj = dr3.GetString(3);
-                            string tarihvesaat = dr3.GetString(4);
-                            lbMesajlar.Items.Add(kimden + " > " + mesaj + " > " + tarihvesaat);
-                            if (sayac == satir)
-                            {
-                                break;
-                            }
-                            sayac++;
-                        }
-                        dr3.Close();
-                    }
-                }
-                con2.Close();
-            }
             con.Open();
             com.Connection = con;
             com.CommandText = "select IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,IlanDurumu,ResimKonumu from tbl_Ilanlar where IlanBaslik = '"+lbSahiplenBaslik.Text+"' and HayvanTuru = '"+lbSahiplenTur.Text+"'and HayvanIrk = '"+lbSahiplenIrk.Text+"' and HayvanYas = '"+lbSahiplenYas.Text+"' and HayvanCinsiyet = '"+lbSahiplenCinsiyet.Text+"'and ResimKonumu = '"+pbSahiplenResim.ImageLocation+"'";
@@ -233,6 +105,60 @@ namespace Petilan.Sayfalar
                 }
                 con.Close();
             }
+
+            SqlCommand com2 = new SqlCommand();
+            con.Open();
+            com2.Connection = con;
+            com2.CommandText = "select IlanId,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,IlanDurumu,ResimKonumu from tbl_Ilanlar where IlanBaslik = '" + lbSahiplenBaslik.Text + "' and HayvanTuru = '" + lbSahiplenTur.Text + "'and HayvanIrk = '" + lbSahiplenIrk.Text + "' and HayvanYas = '" + lbSahiplenYas.Text + "' and HayvanCinsiyet = '" + lbSahiplenCinsiyet.Text + "'and ResimKonumu = '" + pbSahiplenResim.ImageLocation + "'";
+            using (SqlDataReader dr2 = com2.ExecuteReader())
+            {
+                if (dr2.Read())
+                {
+                    int ilanId = dr2.GetInt32(0);
+                    IlanId = ilanId;
+                    //MessageBox.Show(IlanId.ToString());
+                    dr2.Close();
+
+                    SqlCommand com4 = new SqlCommand();
+                    com4.Connection = con;
+                    com4.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = " + IlanId + "";
+                    using (SqlDataReader dr4 = com4.ExecuteReader())
+                    {
+                        while (dr4.Read())
+                        {
+                            string kimden = dr4.GetString(0);
+                            string kime = dr4.GetString(1);
+                            string mesaj = dr4.GetString(2);
+                            string tarihvesaatdegisken = dr4.GetString(3);
+
+                            Kimden = kimden;
+                            Kime = kime;
+                            Mesaj = mesaj;
+                            Tarih = tarihvesaatdegisken;
+                            
+                        }
+                        dr4.Close();
+                        SqlCommand com3 = new SqlCommand();
+                        com3.Connection = con;
+                        com3.CommandText = "select Kimden,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = " + IlanId + " and Kimden = '" + KullaniciAdi + "' or Kimden = '" + Kime + "'";
+                        using (SqlDataReader dr3 = com3.ExecuteReader())
+                        {
+                            while (dr3.Read())
+                            {
+                                string ozelkimden = dr3.GetString(0);
+                                string ozelmesaj = dr3.GetString(1);
+                                string ozeltarih = dr3.GetString(2);
+
+                                lbMesajlar.Items.Add(ozelkimden + " > " + ozelmesaj + " > " + ozeltarih);
+                            }
+                            dr3.Close();
+                        }
+                    }
+                }
+            }
+            con.Close();
+
+            
         }
 
         private void ilanVer_Click(object sender, EventArgs e)

@@ -1,7 +1,8 @@
-Bu hafta yorum kısmı, kısmen bitti. İlan sahibi olmayan kullanıcı giriş yapıp bir ilanın profiline
-tıkladığında yorum kısmında sadece kendinin ve ilan sahibinin yorumlarını görüyor. İlan sahibi ise 
-ilanlarım kısmından kendi ilanının profiline girdiğinde ilana atılan tüm yorumları görebiliyor.
+Bu hafta, geçen hafta yorum kısmında olan problem çözüldü. Problem, hatırlatmak gerekirse ilan sahibinden 
+ilan profiline girdikten  sonra ilan sahibi olmayan kişi ile aynı ilana giriş yapınca ilan sahibinde 
+gözüken tüm yorumlar,  ilan sahibi olmayan kişide de gözüküyordu.
 
--Bir sorun var o da ilan sahibi ile giriş yapıp kendi ilanının profiline girildikten sonra o ilanın
-profiline başka bir kullanıcı ile giriş yapıldığında ilan sahibinin sayfasında gözüken mesajlar
-kullanıcının sayfasına da yansıyor fakat uygulama kapatıp açıldığında bu sorun düzeliyor-
+Çözümü ise şu şekilde oldu, ilan sahibi olmayan kişi anasayfadan ilan profiline girerken, ilan sahibi de
+ilanlarım kısmından ilan profiline ulaşıyor. Ve ikisi de aynı sayfaya yönleniyordu bu da döngülerin
+iki kez çalışmasına sebep oluyordu. Yaptığım işlem ise ilan sahibi olmayan kişinin anasayfadan gittiği 
+ilan profilini ve ilan sahibinin ilanlarım kısmından gittiği ilan profilini farklı sayfalara yönlendirdim.

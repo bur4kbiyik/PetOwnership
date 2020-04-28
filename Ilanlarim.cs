@@ -212,20 +212,19 @@ namespace Petilan.Sayfalar
                     string ilanYas1 = dr.GetString(4);
                     string ilanCinsiyet1 = dr.GetString(5);
                     DegiskenId = dr.GetInt32(6);
-                    Sahiplen shpln = new Sahiplen();
-                    shpln.pbSahiplenResim.ImageLocation = resimKonum1;
-                    shpln.lbSahiplenBaslik.Text = ilanBaslik1;
-                    shpln.lbSahiplenTur.Text = ilanTur1;
-                    shpln.lbSahiplenIrk.Text = ilanIrk1;
-                    shpln.lbSahiplenYas.Text = ilanYas1;
-                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet1;
+                    IlanProfili ilanprf = new IlanProfili();
+                    ilanprf.pbSahiplenResim.ImageLocation = resimKonum1;
+                    ilanprf.lbSahiplenBaslik.Text = ilanBaslik1;
+                    ilanprf.lbSahiplenTur.Text = ilanTur1;
+                    ilanprf.lbSahiplenIrk.Text = ilanIrk1;
+                    ilanprf.lbSahiplenYas.Text = ilanYas1;
+                    ilanprf.lbSahiplenCinsiyet.Text = ilanCinsiyet1;
                 }
                 con.Close();
             }
             this.Hide();
-            Sahiplen sahiplen = new Sahiplen();
-            sahiplen.btSahiplen.Hide();
-            sahiplen.ShowDialog();
+            IlanProfili ilanprofili = new IlanProfili();
+            ilanprofili.ShowDialog();
         }
 
         private void lbIlanlarimBaslik2_Click(object sender, EventArgs e)
@@ -258,20 +257,19 @@ namespace Petilan.Sayfalar
                     string ilanYas2 = dr.GetString(4);
                     string ilanCinsiyet2 = dr.GetString(5);
                     DegiskenId = dr.GetInt32(6);
-                    Sahiplen shpln = new Sahiplen();
-                    shpln.pbSahiplenResim.ImageLocation = resimKonum2;
-                    shpln.lbSahiplenBaslik.Text = ilanBaslik2;
-                    shpln.lbSahiplenTur.Text = ilanTur2;
-                    shpln.lbSahiplenIrk.Text = ilanIrk2;
-                    shpln.lbSahiplenYas.Text = ilanYas2;
-                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet2;
+                    IlanProfili ilanprf = new IlanProfili();
+                    ilanprf.pbSahiplenResim.ImageLocation = resimKonum2;
+                    ilanprf.lbSahiplenBaslik.Text = ilanBaslik2;
+                    ilanprf.lbSahiplenTur.Text = ilanTur2;
+                    ilanprf.lbSahiplenIrk.Text = ilanIrk2;
+                    ilanprf.lbSahiplenYas.Text = ilanYas2;
+                    ilanprf.lbSahiplenCinsiyet.Text = ilanCinsiyet2;
                 }
                 con.Close();
             }
             this.Hide();
-            Sahiplen sahiplen = new Sahiplen();
-            sahiplen.btSahiplen.Hide();
-            sahiplen.ShowDialog();
+            IlanProfili ilanprofili = new IlanProfili();
+            ilanprofili.ShowDialog();
         }
 
         private void lbIlanlarimBaslik3_Click(object sender, EventArgs e)
@@ -304,20 +302,19 @@ namespace Petilan.Sayfalar
                     string ilanYas3 = dr.GetString(4);
                     string ilanCinsiyet3 = dr.GetString(5);
                     DegiskenId = dr.GetInt32(6);
-                    Sahiplen shpln = new Sahiplen();
-                    shpln.pbSahiplenResim.ImageLocation = resimKonum3;
-                    shpln.lbSahiplenBaslik.Text = ilanBaslik3;
-                    shpln.lbSahiplenTur.Text = ilanTur3;
-                    shpln.lbSahiplenIrk.Text = ilanIrk3;
-                    shpln.lbSahiplenYas.Text = ilanYas3;
-                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet3;
+                    IlanProfili ilanprf = new IlanProfili();
+                    ilanprf.pbSahiplenResim.ImageLocation = resimKonum3;
+                    ilanprf.lbSahiplenBaslik.Text = ilanBaslik3;
+                    ilanprf.lbSahiplenTur.Text = ilanTur3;
+                    ilanprf.lbSahiplenIrk.Text = ilanIrk3;
+                    ilanprf.lbSahiplenYas.Text = ilanYas3;
+                    ilanprf.lbSahiplenCinsiyet.Text = ilanCinsiyet3;
                 }
                 con.Close();
             }
             this.Hide();
-            Sahiplen sahiplen = new Sahiplen();
-            sahiplen.btSahiplen.Hide();
-            sahiplen.ShowDialog();
+            IlanProfili ilanprofili = new IlanProfili();
+            ilanprofili.ShowDialog();
         }
 
         private void lbIlanlarimBaslik4_Click(object sender, EventArgs e)
@@ -350,20 +347,19 @@ namespace Petilan.Sayfalar
                     string ilanYas4 = dr.GetString(4);
                     string ilanCinsiyet4 = dr.GetString(5);
                     DegiskenId = dr.GetInt32(6);
-                    Sahiplen shpln = new Sahiplen();
-                    shpln.pbSahiplenResim.ImageLocation = resimKonum4;
-                    shpln.lbSahiplenBaslik.Text = ilanBaslik4;
-                    shpln.lbSahiplenTur.Text = ilanTur4;
-                    shpln.lbSahiplenIrk.Text = ilanIrk4;
-                    shpln.lbSahiplenYas.Text = ilanYas4;
-                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet4;
+                    IlanProfili ilanprf = new IlanProfili();
+                    ilanprf.pbSahiplenResim.ImageLocation = resimKonum4;
+                    ilanprf.lbSahiplenBaslik.Text = ilanBaslik4;
+                    ilanprf.lbSahiplenTur.Text = ilanTur4;
+                    ilanprf.lbSahiplenIrk.Text = ilanIrk4;
+                    ilanprf.lbSahiplenYas.Text = ilanYas4;
+                    ilanprf.lbSahiplenCinsiyet.Text = ilanCinsiyet4;
                 }
                 con.Close();
             }
             this.Hide();
-            Sahiplen sahiplen = new Sahiplen();
-            sahiplen.btSahiplen.Hide();
-            sahiplen.ShowDialog();
+            IlanProfili ilanprofili = new IlanProfili();
+            ilanprofili.ShowDialog();
         }
 
         private void lbIlanlarimBaslik5_Click(object sender, EventArgs e)
@@ -396,20 +392,19 @@ namespace Petilan.Sayfalar
                     string ilanYas5 = dr.GetString(4);
                     string ilanCinsiyet5 = dr.GetString(5);
                     DegiskenId = dr.GetInt32(6);
-                    Sahiplen shpln = new Sahiplen();
-                    shpln.pbSahiplenResim.ImageLocation = resimKonum5;
-                    shpln.lbSahiplenBaslik.Text = ilanBaslik5;
-                    shpln.lbSahiplenTur.Text = ilanTur5;
-                    shpln.lbSahiplenIrk.Text = ilanIrk5;
-                    shpln.lbSahiplenYas.Text = ilanYas5;
-                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet5;
+                    IlanProfili ilanprf = new IlanProfili();
+                    ilanprf.pbSahiplenResim.ImageLocation = resimKonum5;
+                    ilanprf.lbSahiplenBaslik.Text = ilanBaslik5;
+                    ilanprf.lbSahiplenTur.Text = ilanTur5;
+                    ilanprf.lbSahiplenIrk.Text = ilanIrk5;
+                    ilanprf.lbSahiplenYas.Text = ilanYas5;
+                    ilanprf.lbSahiplenCinsiyet.Text = ilanCinsiyet5;
                 }
                 con.Close();
             }
             this.Hide();
-            Sahiplen sahiplen = new Sahiplen();
-            sahiplen.btSahiplen.Hide();
-            sahiplen.ShowDialog();
+            IlanProfili ilanprofili = new IlanProfili();
+            ilanprofili.ShowDialog();
         }
 
         private void lbIlanlarimBaslik6_Click(object sender, EventArgs e)
@@ -442,20 +437,19 @@ namespace Petilan.Sayfalar
                     string ilanYas6 = dr.GetString(4);
                     string ilanCinsiyet6 = dr.GetString(5);
                     DegiskenId = dr.GetInt32(6);
-                    Sahiplen shpln = new Sahiplen();
-                    shpln.pbSahiplenResim.ImageLocation = resimKonum6;
-                    shpln.lbSahiplenBaslik.Text = ilanBaslik6;
-                    shpln.lbSahiplenTur.Text = ilanTur6;
-                    shpln.lbSahiplenIrk.Text = ilanIrk6;
-                    shpln.lbSahiplenYas.Text = ilanYas6;
-                    shpln.lbSahiplenCinsiyet.Text = ilanCinsiyet6;
+                    IlanProfili ilanprf = new IlanProfili();
+                    ilanprf.pbSahiplenResim.ImageLocation = resimKonum6;
+                    ilanprf.lbSahiplenBaslik.Text = ilanBaslik6;
+                    ilanprf.lbSahiplenTur.Text = ilanTur6;
+                    ilanprf.lbSahiplenIrk.Text = ilanIrk6;
+                    ilanprf.lbSahiplenYas.Text = ilanYas6;
+                    ilanprf.lbSahiplenCinsiyet.Text = ilanCinsiyet6;
                 }
                 con.Close();
             }
             this.Hide();
-            Sahiplen sahiplen = new Sahiplen();
-            sahiplen.btSahiplen.Hide();
-            sahiplen.ShowDialog();
+            IlanProfili ilanprofili = new IlanProfili();
+            ilanprofili.ShowDialog();
         }
     }
 }
