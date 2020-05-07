@@ -49,6 +49,7 @@ namespace Petilan.Sayfalar
             lbSahiplenYas.Text = DegiskenYas;
             lbSahiplenCinsiyet.Text = DegiskenCinsiyet;
 
+
             SqlCommand com = new SqlCommand();
             SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
             con.Open();
@@ -67,6 +68,21 @@ namespace Petilan.Sayfalar
                 }
                 con.Close();
             }
+
+            SqlCommand com4 = new SqlCommand();
+            con.Open();
+            com4.Connection = con;
+            com4.CommandText = "select distinct Kimden from tbl_Mesajlar where not Kimden = '" + KullaniciAdi + "'";
+            using (SqlDataReader dr4 = com4.ExecuteReader())
+            {
+                while (dr4.Read())
+                {
+                    string comboBoxKimden = dr4.GetString(0);
+                    cbKime.Items.Add(comboBoxKimden);
+                }
+                dr4.Close();
+            }
+            con.Close();
 
             SqlCommand com2 = new SqlCommand();
             con.Open();
@@ -87,15 +103,17 @@ namespace Petilan.Sayfalar
             SqlCommand com3 = new SqlCommand();
             con.Open();
             com3.Connection = con;
-            com3.CommandText = "select Kimden,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = " + IlanId + "";
+            com3.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = " + IlanId + "";
             using (SqlDataReader dr3 = com3.ExecuteReader())
             {
                 while (dr3.Read())
                 {
+
                     string kimden = dr3.GetString(0);
-                    string mesaj = dr3.GetString(1);
-                    string tarihvesaatdegisken = dr3.GetString(2);
-                    lbMesajlar.Items.Add(kimden + " > " + mesaj + " > " + tarihvesaatdegisken);
+                    string kime = dr3.GetString(1);
+                    string mesaj = dr3.GetString(2);
+                    string tarihvesaatdegisken = dr3.GetString(3);
+                    lbMesajlar.Items.Add(kimden+" > "+" > "+mesaj+" > "+tarihvesaatdegisken);
                 }
                 dr3.Close();
             }
@@ -178,7 +196,7 @@ namespace Petilan.Sayfalar
                         dr2.Close();
                         SqlCommand com3 = new SqlCommand();
                         com3.Connection = con;
-                        com3.CommandText = "insert into tbl_Mesajlar (Kimden,Kime,Mesaj,MesajTarihiveSaati,IlanId) values ('"+KullaniciAdi+"','"+ilanSahibiKAdi+"','"+Yorum+"','"+ tarihvesaat+ "',"+ilanId+")";
+                        com3.CommandText = "insert into tbl_Mesajlar (Kimden,Kime,Mesaj,MesajTarihiveSaati,IlanId) values ('"+KullaniciAdi+"','"+cbKime.SelectedItem+"','"+Yorum+"','"+ tarihvesaat+ "',"+ilanId+")";
                         SqlDataAdapter da = new SqlDataAdapter();
                         com3.ExecuteNonQuery();
 

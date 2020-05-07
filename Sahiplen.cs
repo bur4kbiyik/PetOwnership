@@ -121,33 +121,26 @@ namespace Petilan.Sayfalar
 
                     SqlCommand com4 = new SqlCommand();
                     com4.Connection = con;
-                    com4.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = " + IlanId + "";
+                    com4.CommandText = "select KullaniciAdi from tbl_Kullanici where KullaniciId in (select KullaniciNo from tbl_Ilanlar where IlanId in (select IlanId from tbl_Mesajlar where IlanId = "+IlanId+"))";
                     using (SqlDataReader dr4 = com4.ExecuteReader())
                     {
                         while (dr4.Read())
                         {
-                            string kimden = dr4.GetString(0);
-                            string kime = dr4.GetString(1);
-                            string mesaj = dr4.GetString(2);
-                            string tarihvesaatdegisken = dr4.GetString(3);
-
-                            Kimden = kimden;
-                            Kime = kime;
-                            Mesaj = mesaj;
-                            Tarih = tarihvesaatdegisken;
-                            
+                            string ilanSahibiKullaniciAdi = dr4.GetString(0);
+                            Kime = ilanSahibiKullaniciAdi;
                         }
                         dr4.Close();
                         SqlCommand com3 = new SqlCommand();
                         com3.Connection = con;
-                        com3.CommandText = "select Kimden,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = " + IlanId + " and Kimden = '" + KullaniciAdi + "' or Kimden = '" + Kime + "'";
+                        com3.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = "+IlanId+" and Kimden = '"+KullaniciAdi+"' and Kime = '"+Kime+"' or Kimden = '"+Kime+"' and Kime = '"+KullaniciAdi+"'";
                         using (SqlDataReader dr3 = com3.ExecuteReader())
                         {
                             while (dr3.Read())
                             {
                                 string ozelkimden = dr3.GetString(0);
-                                string ozelmesaj = dr3.GetString(1);
-                                string ozeltarih = dr3.GetString(2);
+                                string ozelkime = dr3.GetString(1);
+                                string ozelmesaj = dr3.GetString(2);
+                                string ozeltarih = dr3.GetString(3);
 
                                 lbMesajlar.Items.Add(ozelkimden + " > " + ozelmesaj + " > " + ozeltarih);
                             }
