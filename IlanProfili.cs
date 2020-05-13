@@ -24,6 +24,8 @@ namespace Petilan.Sayfalar
         public string DegiskenCinsiyet { get; set; }
         public string Yorum { get; set; }
         public int IlanId { get; set; }
+        public string IlanSahibi { get; set; }
+        public string SecilenKullanici { get; set; }
         public IlanProfili()
         {
             InitializeComponent();
@@ -100,24 +102,24 @@ namespace Petilan.Sayfalar
             }
             con.Close();
 
-            SqlCommand com3 = new SqlCommand();
-            con.Open();
-            com3.Connection = con;
-            com3.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = " + IlanId + "";
-            using (SqlDataReader dr3 = com3.ExecuteReader())
-            {
-                while (dr3.Read())
-                {
+            //SqlCommand com3 = new SqlCommand();
+            //con.Open();
+            //com3.Connection = con;
+            //com3.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = " + IlanId + "";
+            //using (SqlDataReader dr3 = com3.ExecuteReader())
+            //{
+            //    while (dr3.Read())
+            //    {
 
-                    string kimden = dr3.GetString(0);
-                    string kime = dr3.GetString(1);
-                    string mesaj = dr3.GetString(2);
-                    string tarihvesaatdegisken = dr3.GetString(3);
-                    lbMesajlar.Items.Add(kimden+" > "+" > "+mesaj+" > "+tarihvesaatdegisken);
-                }
-                dr3.Close();
-            }
-            con.Close();
+            //        string kimden = dr3.GetString(0);
+            //        string kime = dr3.GetString(1);
+            //        string mesaj = dr3.GetString(2);
+            //        string tarihvesaatdegisken = dr3.GetString(3);
+            //        lbMesajlar.Items.Add(kimden+" > "+mesaj+" > "+tarihvesaatdegisken);
+            //    }
+            //    dr3.Close();
+            //}
+            //con.Close();
         }
 
         private void btSahiplenHesap_Click(object sender, EventArgs e)
@@ -202,6 +204,51 @@ namespace Petilan.Sayfalar
 
                         MessageBox.Show("Mesaj Gönderildi!");
                     }
+                }
+            }
+            con.Close();
+        }
+
+        private void cbKime_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lbMesajlar.Items.Clear();
+
+            //MessageBox.Show(cbKime.SelectedItem.ToString());
+            SecilenKullanici = cbKime.SelectedItem.ToString();
+
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            SqlCommand com = new SqlCommand();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select KullaniciAdi from tbl_Kullanici where KullaniciId in (select KullaniciNo from tbl_Ilanlar where IlanId in (select IlanId from tbl_Mesajlar where IlanId = " + IlanId + "))";
+            using (SqlDataReader dr = com.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    string ilanSahibiKullaniciAdi = dr.GetString(0);
+                    IlanSahibi = ilanSahibiKullaniciAdi;
+                }
+                dr.Close();
+                SqlCommand com2 = new SqlCommand();
+                com2.Connection = con;
+                com2.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = "+IlanId+" and Kimden = '"+SecilenKullanici+"' and Kime = '"+ IlanSahibi+ "' or Kimden = '" + IlanSahibi + "' and Kime = '" + SecilenKullanici + "'";
+                using (SqlDataReader dr2 = com2.ExecuteReader())
+                {
+                    while (dr2.Read())
+                    {
+                         string ozelkimden = dr2.GetString(0);
+                         string ozelkime = dr2.GetString(1);
+                         string ozelmesaj = dr2.GetString(2);
+                         string ozeltarih = dr2.GetString(3);
+
+                         //MessageBox.Show(ozelkimden);
+                         //MessageBox.Show(ozelkime);
+                         //MessageBox.Show(ozelmesaj);
+                         //MessageBox.Show(ozeltarih);
+
+                         lbMesajlar.Items.Add(ozelkimden + " > " + ozelmesaj + " > " + ozeltarih);
+                    }
+                    dr2.Close();
                 }
             }
             con.Close();

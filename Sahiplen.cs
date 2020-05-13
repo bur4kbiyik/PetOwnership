@@ -150,8 +150,6 @@ namespace Petilan.Sayfalar
                 }
             }
             con.Close();
-
-            
         }
 
         private void ilanVer_Click(object sender, EventArgs e)
