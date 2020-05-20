@@ -1,65 +1,56 @@
-﻿using Petilan.Sayfalar;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Data.OleDb;
 using System.Windows.Forms;
 
-namespace Petilan
+namespace Petilan.Sayfalar
 {
-    
-    public partial class Anasayfa : Form
+    public partial class AramaSonuc : Form
     {
         PictureBox[] pictureBoxs = new PictureBox[6];
-        Label[] rastgeleBasliklari = new Label[6];
+        Label[] ilanBasliklari = new Label[6];
         Label[] rastgeleTurleri = new Label[6];
         Label[] rastgeleIrklari = new Label[6];
         Label[] rastgeleYaslari = new Label[6];
         Label[] rastgeleCinsiyetleri = new Label[6];
-        public Anasayfa()
-        {
-            InitializeComponent();
-        }
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btDegistir_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btUyeOl_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            UyeOl uyeOl = new UyeOl();
-            uyeOl.ShowDialog();
-
-        }
-
-        private void tbAd_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        public static int DegiskenId { get; set; } 
+        public string KullaniciAdi { get; set; }
+        public static string AramaSonucTur { get; set; }
+        public static string AramaSonucIrk { get; set; }
+        public static string AramaSonucYas { get; set; }
+        public static string AramaSonucCinsiyet { get; set; }
+        public static int DegiskenId { get; set; }
         public static string DegiskenResim { get; set; }
         public static string DegiskenBaslik { get; set; }
         public static string DegiskenTur { get; set; }
         public static string DegiskenIrk { get; set; }
         public static string DegiskenYas { get; set; }
         public static string DegiskenCinsiyet { get; set; }
-        public static string KullaniciAdi { get; set; }
-        private void Anasayfa_Load(object sender, EventArgs e)
+        public AramaSonuc()
         {
+            InitializeComponent();
+        }
+
+        private void btHesap_Click(object sender, EventArgs e)
+        {
+            cmHesap.Show(Cursor.Position.X, Cursor.Position.Y);
+        }
+
+        private void AramaSonuc_Load(object sender, EventArgs e)
+        {
+            KullaniciAdi = Anasayfa.KullaniciAdi;
+            btHesap.Text = KullaniciAdi;
+
+            AramaSonucTur = GelismisArama.AramaTur;
+            AramaSonucIrk = GelismisArama.AramaIrk;
+            AramaSonucYas = GelismisArama.AramaYas;
+            AramaSonucCinsiyet = GelismisArama.AramaCinsiyet;
+
             pictureBoxs[0] = pictureBox1;
             pictureBoxs[1] = pictureBox2;
             pictureBoxs[2] = pictureBox3;
@@ -67,12 +58,12 @@ namespace Petilan
             pictureBoxs[4] = pictureBox5;
             pictureBoxs[5] = pictureBox6;
 
-            rastgeleBasliklari[0] = lbRastgeleBaslik1;
-            rastgeleBasliklari[1] = lbRastgeleBaslik2;
-            rastgeleBasliklari[2] = lbRastgeleBaslik3;
-            rastgeleBasliklari[3] = lbRastgeleBaslik4;
-            rastgeleBasliklari[4] = lbRastgeleBaslik5;
-            rastgeleBasliklari[5] = lbRastgeleBaslik6;
+            ilanBasliklari[0] = lbRastgeleBaslik1;
+            ilanBasliklari[1] = lbRastgeleBaslik2;
+            ilanBasliklari[2] = lbRastgeleBaslik3;
+            ilanBasliklari[3] = lbRastgeleBaslik4;
+            ilanBasliklari[4] = lbRastgeleBaslik5;
+            ilanBasliklari[5] = lbRastgeleBaslik6;
 
             rastgeleTurleri[0] = lbRastgeleTur1;
             rastgeleTurleri[1] = lbRastgeleTur2;
@@ -101,160 +92,60 @@ namespace Petilan
             rastgeleCinsiyetleri[3] = lbRastgeleCinsiyet4;
             rastgeleCinsiyetleri[4] = lbRastgeleCinsiyet5;
             rastgeleCinsiyetleri[5] = lbRastgeleCinsiyet6;
-        }
-        SqlConnection baglanti;
-        SqlCommand command;
-        SqlDataReader dataReader;
-
-        public static string SetValueForText1 = "";
-        private void btGiris_Click(object sender, EventArgs e)
-        {
-
-          
-            SetValueForText1 = tbKAdiAnasayfa.Text;
-            Anasayfa.KullaniciAdi = SetValueForText1;
-            
-            baglanti = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
-            command = new SqlCommand();
-            baglanti.Open();
-            command.Connection = baglanti;
-            command.CommandText = "SELECT * FROM tbl_Kullanici where KullaniciAdi='" + KullaniciAdi + "' AND Sifre='" + tbSifreAnasayfa.Text + "'";
-            dataReader = command.ExecuteReader();
-            if (dataReader.Read())
+            SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "select IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet,ResimKonumu from tbl_Ilanlar where HayvanTuru like '%"+AramaSonucTur+"%' and HayvanIrk like '%"+AramaSonucIrk+"%' and HayvanYas like '%"+AramaSonucYas+"%' and HayvanCinsiyet like '%"+AramaSonucCinsiyet+ "%' and KullaniciNo not in (select KullaniciId from tbl_Kullanici where KullaniciAdi = '"+KullaniciAdi+"')";
+            using (SqlDataReader dr = com.ExecuteReader())
             {
                 int sayac = 0;
-
-                baglanti = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
-                SqlCommand com = new SqlCommand();
-                baglanti.Open();
-                com.Connection = baglanti;
-                com.CommandText = "select Top(6) ResimKonumu,IlanBaslik,HayvanTuru,HayvanIrk,HayvanYas,HayvanCinsiyet from tbl_Ilanlar where KullaniciNo not in (select KullaniciId from tbl_Kullanici where KullaniciAdi = '" + KullaniciAdi + "') order by IlanId desc";
-
-                using (SqlDataReader dr = com.ExecuteReader())
+                while (dr.Read())
                 {
-                    while (dr.Read())
+                    if (AramaSonucTur != null)
                     {
-                        var resimCek = dr.GetString(0);
-                        string baslikCek = dr.GetString(1);
-                        string turCek = dr.GetString(2);
-                        string irkCek = dr.GetString(3);
-                        string yasCek = dr.GetString(4);
-                        string cinsiyetCek = dr.GetString(5);
+                        string baslik = dr.GetString(0);
+                        string tur = dr.GetString(1);
+                        string irk = dr.GetString(2);
+                        string yas = dr.GetString(3);
+                        string cinsiyet = dr.GetString(4);
+                        string resim = dr.GetString(5);
 
-                        pictureBoxs[sayac].ImageLocation = resimCek;
-                        rastgeleBasliklari[sayac].Text = baslikCek;
-                        rastgeleTurleri[sayac].Text = turCek;
-                        rastgeleIrklari[sayac].Text = irkCek;
-                        rastgeleYaslari[sayac].Text = yasCek;
-                        rastgeleCinsiyetleri[sayac].Text = cinsiyetCek;
-
-                        //MessageBox.Show(resimCek); // denemek için kullanıldı
+                        pictureBoxs[sayac].ImageLocation = resim;
+                        ilanBasliklari[sayac].Text = baslik;
+                        rastgeleTurleri[sayac].Text = tur;
+                        rastgeleIrklari[sayac].Text = irk;
+                        rastgeleYaslari[sayac].Text = yas;
+                        rastgeleCinsiyetleri[sayac].Text = cinsiyet;
 
                         sayac++;
                     }
+                    
                 }
-                baglanti.Close();
-
-                tbKAdiAnasayfa.Hide();
-                tbSifreAnasayfa.Hide();
-                label1.Hide();
-                label2.Hide();
-                btUyeOl.Hide();
-                btGiris.Hide();
-                adminGiris.Hide();
-                btHesap.Visible = true;
-                lbGelismisArama.Visible = true;
-                btHesap.Text = tbKAdiAnasayfa.Text;
-
-                //MessageBox.Show(KullaniciAdi); deneme amaçlı kullanıldı
+                dr.Close();
             }
-            else
-            {
-                MessageBox.Show("Kullanıcı adını ve şifrenizi kontrol ediniz.");
-            }
-            baglanti.Close();
-
-
-            for (int i = 0; i < pictureBoxs.Length; i++)
-            {
-                pictureBoxs[i].Visible = true;
-            }
-            for (int i = 0; i < rastgeleBasliklari.Length; i++)
-            {
-                rastgeleBasliklari[i].Visible = true;
-            }
-            for (int i = 0; i < rastgeleTurleri.Length; i++)
-            {
-                rastgeleTurleri[i].Visible = true;
-            }
-            for (int i = 0; i < rastgeleIrklari.Length; i++)
-            {
-                rastgeleIrklari[i].Visible = true;
-            }
-            for (int i = 0; i < rastgeleYaslari.Length; i++)
-            {
-                rastgeleYaslari[i].Visible = true;
-            }
-            for (int i = 0; i < rastgeleCinsiyetleri.Length; i++)
-            {
-                rastgeleCinsiyetleri[i].Visible = true;
-            }
+            con.Close();
         }
 
-
-        private void btHesap_Click(object sender, EventArgs e)
-        {
-            cmHesap.Show(Cursor.Position.X, Cursor.Position.Y);
-        }
-
-        private void cmHesap_Opening(object sender, CancelEventArgs e)
-        {
-
-        }
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            tbKAdiAnasayfa.Visible = true;
-            tbSifreAnasayfa.Visible = true;
-            label1.Visible = true;
-            label2.Visible = true;
-            btUyeOl.Visible = true;
-            btGiris.Visible = true;
-            for (int i = 0; i < pictureBoxs.Length; i++)
-            {
-                pictureBoxs[i].Hide();
-            }
-            for (int i = 0; i < rastgeleBasliklari.Length; i++)
-            {
-                rastgeleBasliklari[i].Hide();
-            }
-            for (int i = 0; i < rastgeleTurleri.Length; i++)
-            {
-                rastgeleTurleri[i].Hide();
-            }
-            for (int i = 0; i < rastgeleIrklari.Length; i++)
-            {
-                rastgeleIrklari[i].Hide();
-            }
-            for (int i = 0; i < rastgeleYaslari.Length; i++)
-            {
-                rastgeleYaslari[i].Hide();
-            }
-            for (int i = 0; i < rastgeleCinsiyetleri.Length; i++)
-            {
-                rastgeleCinsiyetleri[i].Hide();
-            }
-            btHesap.Hide();
-        }
-
-        private void adminGiris_Click(object sender, EventArgs e)
+        private void cikisYap_Click(object sender, EventArgs e)
         {
             this.Hide();
-            AdminGiris adminGiris = new AdminGiris();
-            adminGiris.ShowDialog();
+            Anasayfa anasayfa = new Anasayfa();
+            anasayfa.tbKAdiAnasayfa.Visible = true;
+            anasayfa.tbSifreAnasayfa.Visible = true;
+            anasayfa.label1.Visible = true;
+            anasayfa.label2.Visible = true;
+            anasayfa.btUyeOl.Visible = true;
+            anasayfa.btGiris.Visible = true;
+            anasayfa.btHesap.Hide();
+            anasayfa.ShowDialog();
+        }
+
+        private void gelenIstekler_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            GelenIstekler gi = new GelenIstekler();
+            gi.ShowDialog();
         }
 
         private void ilanVer_Click(object sender, EventArgs e)
@@ -271,12 +162,12 @@ namespace Petilan
             Ilanlarim ilanlarim = new Ilanlarim();
             ilanlarim.ShowDialog();
         }
-        public static string Kontrol2 { get; set; }
-        string kontrol2 = "";
+        public static string Kontrol { get; set; }
+        string kontrol = "";
         private void lbRastgeleBaslik1_Click(object sender, EventArgs e)
         {
-            kontrol2 = "tiklandi";
-            Kontrol2 = kontrol2;
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
             DegiskenResim = pictureBox1.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik1.Text;
@@ -313,15 +204,15 @@ namespace Petilan
                 }
                 con.Close();
             }
-            this.Hide();
+
             Sahiplen sahiplen = new Sahiplen();
+            this.Hide();
             sahiplen.ShowDialog();
         }
-
         private void lbRastgeleBaslik2_Click(object sender, EventArgs e)
         {
-            kontrol2 = "tiklandi";
-            Kontrol2 = kontrol2;
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
             DegiskenResim = pictureBox2.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik2.Text;
@@ -358,15 +249,16 @@ namespace Petilan
                 }
                 con.Close();
             }
-            this.Hide();
+
             Sahiplen sahiplen = new Sahiplen();
+            this.Hide();
             sahiplen.ShowDialog();
         }
 
         private void lbRastgeleBaslik3_Click(object sender, EventArgs e)
         {
-            kontrol2 = "tiklandi";
-            Kontrol2 = kontrol2;
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
             DegiskenResim = pictureBox3.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik3.Text;
@@ -403,15 +295,15 @@ namespace Petilan
                 }
                 con.Close();
             }
-            this.Hide();
+
             Sahiplen sahiplen = new Sahiplen();
+            this.Hide();
             sahiplen.ShowDialog();
         }
-
         private void lbRastgeleBaslik4_Click(object sender, EventArgs e)
         {
-            kontrol2 = "tiklandi";
-            Kontrol2 = kontrol2;
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
             DegiskenResim = pictureBox4.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik4.Text;
@@ -448,15 +340,15 @@ namespace Petilan
                 }
                 con.Close();
             }
-            this.Hide();
+
             Sahiplen sahiplen = new Sahiplen();
+            this.Hide();
             sahiplen.ShowDialog();
         }
-
         private void lbRastgeleBaslik5_Click(object sender, EventArgs e)
         {
-            kontrol2 = "tiklandi";
-            Kontrol2 = kontrol2;
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
             DegiskenResim = pictureBox5.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik5.Text;
@@ -493,16 +385,16 @@ namespace Petilan
                 }
                 con.Close();
             }
-            this.Hide();
+
             Sahiplen sahiplen = new Sahiplen();
+            this.Hide();
             sahiplen.ShowDialog();
         }
 
-        
         private void lbRastgeleBaslik6_Click(object sender, EventArgs e)
         {
-            kontrol2 = "tiklandi";
-            Kontrol2 = kontrol2;
+            kontrol = "tiklandi";
+            Kontrol = kontrol;
             DegiskenResim = pictureBox6.ImageLocation;
             /*MessageBox.Show(DegiskenResim);*/ // denemek için kullanılmıştır
             DegiskenBaslik = lbRastgeleBaslik6.Text;
@@ -539,28 +431,15 @@ namespace Petilan
                 }
                 con.Close();
             }
-            this.Hide();
+
             Sahiplen sahiplen = new Sahiplen();
+            this.Hide();
             sahiplen.ShowDialog();
         }
 
-        private void label8_Click(object sender, EventArgs e)
-        {
+        
 
-        }
+        
 
-        private void gelenIstekler_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            GelenIstekler gi = new GelenIstekler();
-            gi.ShowDialog();
-        }
-
-        private void lbGelismisArama_Click(object sender, EventArgs e)
-        {
-            GelismisArama gelismisArama = new GelismisArama();
-            this.Hide();
-            gelismisArama.ShowDialog();
-        }
     }
 }

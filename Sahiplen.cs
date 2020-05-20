@@ -72,21 +72,40 @@ namespace Petilan.Sayfalar
             //MessageBox.Show(DegiskenYas);
             //MessageBox.Show(DegiskenCinsiyet);
             //MessageBox.Show(DegiskenId.ToString());
+            if (Anasayfa.Kontrol2 == "tiklandi")
+            {
+                DegiskenResim = Anasayfa.DegiskenResim;
+                DegiskenBaslik = Anasayfa.DegiskenBaslik;
+                DegiskenTur = Anasayfa.DegiskenTur;
+                DegiskenIrk = Anasayfa.DegiskenIrk;
+                DegiskenYas = Anasayfa.DegiskenYas;
+                DegiskenCinsiyet = Anasayfa.DegiskenCinsiyet;
+                DegiskenId = Anasayfa.DegiskenId;
 
-            DegiskenResim = Anasayfa.DegiskenResim;
-            DegiskenBaslik = Anasayfa.DegiskenBaslik;
-            DegiskenTur = Anasayfa.DegiskenTur;
-            DegiskenIrk = Anasayfa.DegiskenIrk;
-            DegiskenYas = Anasayfa.DegiskenYas;
-            DegiskenCinsiyet = Anasayfa.DegiskenCinsiyet;
-            DegiskenId = Anasayfa.DegiskenId;
+                pbSahiplenResim.ImageLocation = DegiskenResim;
+                lbSahiplenBaslik.Text = DegiskenBaslik;
+                lbSahiplenTur.Text = DegiskenTur;
+                lbSahiplenIrk.Text = DegiskenIrk;
+                lbSahiplenYas.Text = DegiskenYas;
+                lbSahiplenCinsiyet.Text = DegiskenCinsiyet;
+            }
+            else
+            {
+                DegiskenResim = AramaSonuc.DegiskenResim;
+                DegiskenBaslik = AramaSonuc.DegiskenBaslik;
+                DegiskenTur = AramaSonuc.DegiskenTur;
+                DegiskenIrk = AramaSonuc.DegiskenIrk;
+                DegiskenYas = AramaSonuc.DegiskenYas;
+                DegiskenCinsiyet = AramaSonuc.DegiskenCinsiyet;
+                DegiskenId = AramaSonuc.DegiskenId;
 
-            pbSahiplenResim.ImageLocation = DegiskenResim;
-            lbSahiplenBaslik.Text = DegiskenBaslik;
-            lbSahiplenTur.Text = DegiskenTur;
-            lbSahiplenIrk.Text = DegiskenIrk;
-            lbSahiplenYas.Text = DegiskenYas;
-            lbSahiplenCinsiyet.Text = DegiskenCinsiyet;
+                pbSahiplenResim.ImageLocation = DegiskenResim;
+                lbSahiplenBaslik.Text = DegiskenBaslik;
+                lbSahiplenTur.Text = DegiskenTur;
+                lbSahiplenIrk.Text = DegiskenIrk;
+                lbSahiplenYas.Text = DegiskenYas;
+                lbSahiplenCinsiyet.Text = DegiskenCinsiyet;
+            }
 
             con.Open();
             com.Connection = con;
