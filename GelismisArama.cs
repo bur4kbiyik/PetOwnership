@@ -131,6 +131,7 @@ namespace Petilan.Sayfalar
             anasayfa.btUyeOl.Visible = true;
             anasayfa.btGiris.Visible = true;
             anasayfa.btHesap.Hide();
+            anasayfa.lbGelismisArama.Hide();
             anasayfa.ShowDialog();
         }
     }

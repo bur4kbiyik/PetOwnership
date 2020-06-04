@@ -45,6 +45,7 @@ namespace Petilan.Sayfalar
             anasayfa.btUyeOl.Visible = true;
             anasayfa.btGiris.Visible = true;
             anasayfa.btHesap.Hide();
+            anasayfa.lbGelismisArama.Hide();
             anasayfa.ShowDialog();
         }
 
@@ -151,7 +152,7 @@ namespace Petilan.Sayfalar
                         dr4.Close();
                         SqlCommand com3 = new SqlCommand();
                         com3.Connection = con;
-                        com3.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = "+IlanId+" and Kimden = '"+KullaniciAdi+"' and Kime = '"+Kime+"' or Kimden = '"+Kime+"' and Kime = '"+KullaniciAdi+"'";
+                        com3.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where (IlanId = " + IlanId + " and Kimden = '" + KullaniciAdi+"' and Kime = '"+Kime+ "') or (IlanId = " + IlanId + " and Kimden = '" + Kime+"' and Kime = '"+KullaniciAdi+"')";
                         using (SqlDataReader dr3 = com3.ExecuteReader())
                         {
                             while (dr3.Read())

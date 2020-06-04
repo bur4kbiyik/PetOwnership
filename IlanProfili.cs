@@ -159,6 +159,7 @@ namespace Petilan.Sayfalar
             anasayfa.btUyeOl.Visible = true;
             anasayfa.btGiris.Visible = true;
             anasayfa.btHesap.Hide();
+            anasayfa.lbGelismisArama.Hide();
             anasayfa.ShowDialog();
         }
 
@@ -216,7 +217,9 @@ namespace Petilan.Sayfalar
             //MessageBox.Show(cbKime.SelectedItem.ToString());
             SecilenKullanici = cbKime.SelectedItem.ToString();
 
+
             SqlConnection con = new SqlConnection("Data Source=BURAK\\SQLEXPRESS;Initial Catalog=PETILAN_YDK;Integrated Security=True");
+
             SqlCommand com = new SqlCommand();
             con.Open();
             com.Connection = con;
@@ -231,7 +234,7 @@ namespace Petilan.Sayfalar
                 dr.Close();
                 SqlCommand com2 = new SqlCommand();
                 com2.Connection = con;
-                com2.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where IlanId = "+IlanId+" and Kimden = '"+SecilenKullanici+"' and Kime = '"+ IlanSahibi+ "' or Kimden = '" + IlanSahibi + "' and Kime = '" + SecilenKullanici + "'";
+                com2.CommandText = "select Kimden,Kime,Mesaj,MesajTarihiveSaati from tbl_Mesajlar where (IlanId = "+IlanId+" and Kimden = '"+SecilenKullanici+"' and Kime = '"+ IlanSahibi+ "') or (IlanId = " + IlanId + " and Kimden = '" + IlanSahibi + "' and Kime = '" + SecilenKullanici + "')";
                 using (SqlDataReader dr2 = com2.ExecuteReader())
                 {
                     while (dr2.Read())
