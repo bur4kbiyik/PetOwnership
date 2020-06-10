@@ -124,15 +124,15 @@ namespace Petilan.Sayfalar
         {
             this.Hide();
             Anasayfa anasayfa = new Anasayfa();
-            anasayfa.tbKAdiAnasayfa.Visible = true;
-            anasayfa.tbSifreAnasayfa.Visible = true;
-            anasayfa.label1.Visible = true;
-            anasayfa.label2.Visible = true;
-            anasayfa.btUyeOl.Visible = true;
-            anasayfa.btGiris.Visible = true;
-            anasayfa.btHesap.Hide();
-            anasayfa.lbGelismisArama.Hide();
             anasayfa.ShowDialog();
+        }
+
+        private void btAnasayfa_Click(object sender, EventArgs e)
+        {
+            AnasayfaListele.KullaniciAdi = KullaniciAdi;
+            this.Hide();
+            AnasayfaListele ansyflst = new AnasayfaListele();
+            ansyflst.ShowDialog();
         }
     }
 }

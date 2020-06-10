@@ -71,21 +71,6 @@ namespace Petilan.Sayfalar
                 con.Close();
             }
 
-            SqlCommand com4 = new SqlCommand();
-            con.Open();
-            com4.Connection = con;
-            com4.CommandText = "select distinct Kimden from tbl_Mesajlar where not Kimden = '" + KullaniciAdi + "'";
-            using (SqlDataReader dr4 = com4.ExecuteReader())
-            {
-                while (dr4.Read())
-                {
-                    string comboBoxKimden = dr4.GetString(0);
-                    cbKime.Items.Add(comboBoxKimden);
-                }
-                dr4.Close();
-            }
-            con.Close();
-
             SqlCommand com2 = new SqlCommand();
             con.Open();
             com2.Connection = con;
@@ -102,6 +87,23 @@ namespace Petilan.Sayfalar
             }
             con.Close();
 
+
+            SqlCommand com4 = new SqlCommand();
+            con.Open();
+            com4.Connection = con;
+            com4.CommandText = "select distinct Kimden from tbl_Mesajlar where not Kimden = '" + KullaniciAdi + "' and IlanId = "+IlanId+"";
+            using (SqlDataReader dr4 = com4.ExecuteReader())
+            {
+                while (dr4.Read())
+                {
+                    string comboBoxKimden = dr4.GetString(0);
+                    cbKime.Items.Add(comboBoxKimden);
+                }
+                dr4.Close();
+            }
+            con.Close();
+
+            
             //SqlCommand com3 = new SqlCommand();
             //con.Open();
             //com3.Connection = con;
@@ -152,14 +154,6 @@ namespace Petilan.Sayfalar
         {
             this.Hide();
             Anasayfa anasayfa = new Anasayfa();
-            anasayfa.tbKAdiAnasayfa.Visible = true;
-            anasayfa.tbSifreAnasayfa.Visible = true;
-            anasayfa.label1.Visible = true;
-            anasayfa.label2.Visible = true;
-            anasayfa.btUyeOl.Visible = true;
-            anasayfa.btGiris.Visible = true;
-            anasayfa.btHesap.Hide();
-            anasayfa.lbGelismisArama.Hide();
             anasayfa.ShowDialog();
         }
 
@@ -255,6 +249,14 @@ namespace Petilan.Sayfalar
                 }
             }
             con.Close();
+        }
+
+        private void btAnasayfa_Click(object sender, EventArgs e)
+        {
+            AnasayfaListele.KullaniciAdi = KullaniciAdi;
+            this.Hide();
+            AnasayfaListele ansyflst = new AnasayfaListele();
+            ansyflst.ShowDialog();
         }
     }
 }

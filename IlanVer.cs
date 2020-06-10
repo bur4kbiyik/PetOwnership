@@ -116,6 +116,7 @@ namespace Petilan.Sayfalar
             {
                 MessageBox.Show("Resim eklenirken bir hata oluştu.");
             }
+            pictureBox1.Hide();
         }
 
 
@@ -240,14 +241,6 @@ namespace Petilan.Sayfalar
         {
             this.Hide();
             Anasayfa anasayfa = new Anasayfa();
-            anasayfa.tbKAdiAnasayfa.Visible = true;
-            anasayfa.tbSifreAnasayfa.Visible = true;
-            anasayfa.label1.Visible = true;
-            anasayfa.label2.Visible = true;
-            anasayfa.btUyeOl.Visible = true;
-            anasayfa.btGiris.Visible = true;
-            anasayfa.btHesap.Hide();
-            anasayfa.lbGelismisArama.Hide();
             anasayfa.ShowDialog();
         }
 
@@ -270,6 +263,14 @@ namespace Petilan.Sayfalar
             this.Hide();
             GelenIstekler gi = new GelenIstekler();
             gi.ShowDialog();
+        }
+
+        private void btAnasayfa_Click(object sender, EventArgs e)
+        {
+            AnasayfaListele.KullaniciAdi = KullaniciAdi;
+            this.Hide();
+            AnasayfaListele ansyflst = new AnasayfaListele();
+            ansyflst.ShowDialog();
         }
     }
 }
